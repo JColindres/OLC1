@@ -1,0 +1,102 @@
+
+package Analisis;
+
+import java_cup.runtime.*;
+
+parser code
+{:
+    /**Metodo al que se llama automáticamente ante algún error sintactico.*/
+    public void syntax_error(Symbol s){
+        System.err.println("Error en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador "
+        +s.value + " no reconocido." );
+        
+    }
+
+    /**Metodo al que se llama en el momento en que ya no es posible una recuperación de
+    errores.*/
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.err.println("Error en la Línea " + (s.right+1)+ "Columna "+(s.left+1)+". Identificador " +
+        s.value + " no reconocido.");
+        
+    
+    }
+
+    /*public Nodo getRaiz(){
+        return action_obj.raiz;
+    }*/
+:}
+
+
+action code {:
+    //Nodo raiz=null;
+    
+:}
+
+/*terminales reservados*/
+terminal String dim,as,resInteger,resString,puntoComa,coma,mas,menos,mul,div,mod,pot;
+
+terminal String entero,decimal,cadena,bool,iden,caracter;
+
+terminal String salto,mayor,menor,igual,resIf,resThen,resEndIf;
+
+/*
+* Este terminal tiene un valor string. Recuerda que le dábamos el valor
+* en el código del analizador léxico, al darle como parámetro un valor
+* string al objeto Symbolo.
+*/
+
+
+/*
+* Aquí están los no terminales
+*/
+non terminal INICIO,EXP,VALOR,TIPO,DECLARACION;
+non terminal SENTIF,EXPR;
+non terminal SENTENCIA,SENTENCIAS;
+
+
+/* Precedencia */
+precedence left mas, menos;
+precedence left mul, div;
+
+/* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
+start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
+
+
+INICIO::=SENTENCIAS:val {:System.out.println(val); :};
+
+SENTENCIAS::=SENTENCIAS:val1 SENTENCIA :val2 {:RESULT=val1.toString() + val2.toString();:}
+            |SENTENCIA :val {:RESULT=val;:};
+
+SENTENCIA::= DECLARACION:val {:RESULT=val;:}
+            |SENTIF:val {:RESULT=val;:};
+
+DECLARACION::=dim iden:id as TIPO:tipo igual  EXP:dato salto {:RESULT="int "+ id + " = "+dato+";\n"; :};
+
+SENTIF::= resIf EXPR :val  resThen    resEndIf salto
+{:
+RESULT= "if ( " + val + " ) {     }\n";
+:}
+;
+
+EXPR::= EXP :val1 mayor EXP :val2 {: RESULT = val1 +">" + val2; :}
+	|EXP :val1 menor EXP :val2 {: RESULT = val1 +"<" + val2; :}
+	|EXP :val1  igual EXP :val2 {: RESULT = val1 +"=" + val2; :}
+|EXP :val {: RESULT = val; :} ; 
+
+
+EXP::=EXP:val1 mas EXP:val2 {:RESULT=val1+"+"+val2;:}
+    |EXP:val1 menos EXP:val2 {:RESULT=val1+"-"+val2;:}
+    |EXP:val1 mul EXP:val2 {:RESULT=val1+"*"+val2;:}
+    |EXP:val1 div EXP:val2 {:RESULT=val1+"/"+val2;:}
+    |VALOR:val {:RESULT=val;:};
+
+VALOR::=entero:val {:RESULT=val;:} 
+        |decimal:val {:RESULT=val;:}
+        |cadena:val {:RESULT=val;:}
+        |bool:val {:RESULT=val;:}
+        |iden:val {:RESULT=val;:}
+        |caracter:val {:RESULT=val;:};
+
+TIPO::=resInteger:val {:RESULT=val;:}
+    |resString:val {:RESULT=val;:};
+
