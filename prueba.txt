@@ -1,0 +1,26 @@
+import java.util.*;      //hola
+import java.sql.base1;   //chish
+
+public class ejemplo_final
+{
+	private String value;
+	private boolean valid;
+
+	public boolean parse() {
+		Objeto nuevo_objeto = new Objeto();
+		Saludar(hola);
+		String vaaa = (10*5)/5*5;
+		Objeto nuevo_objeto = new Objeto();
+	}
+
+	public String Saludar(String val)
+	{
+		if(val!=""){
+			return val;
+		}
+	}
+
+	public static void main(String args[])
+	{
+	}
+}

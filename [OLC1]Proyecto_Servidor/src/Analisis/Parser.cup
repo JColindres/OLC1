@@ -62,7 +62,7 @@ terminal String corA,corC,resInt,resString,resPublic,resPrivate,resStatic,resBoo
                 menorq,menorIgual,mayorq,mayorIgual,igual,coma,parentesisA,
                 parentesisC,mas,menos,mul,div,and,or,not,resReturn,resObject,resImport,
                 resProtected,resFinal,resClass,resSwitch,resCase,resBreak,resDefault,
-                puntoYcoma,dosPuntos,parA,parC,punto,modulo;
+                puntoYcoma,dosPuntos,parA,parC,punto,modulo,resVoid;
 
 terminal String entero,decimal,cadena,bool,iden,caracter;
 
@@ -79,7 +79,7 @@ terminal String entero,decimal,cadena,bool,iden,caracter;
 non terminal INICIO,IMPORT,CLASS,EXPIMP,EXP,VALOR,TIPO,ACCESO,COD,MET,DECLARACION,
              ASIGNACION,SENTENCIAS,PARAM,COD2,LISTAID,OPREL,IGUALACION,SENTIF,LLAM,
              SENTELSE,SENTFOR,SENTWHILE,SENTDO,SENTSWITCH,EXPSENT,SALIDA,CASES,MAIN,
-             INSTANCIA;
+             INSTANCIA,LLAM2,DEFAULT;
 
 
 /* Precedencia */
@@ -88,7 +88,7 @@ precedence left mul, div;
 precedence left punto, modulo;
 precedence left mayorq, menorq;
 precedence left mayorIgual, menorIgual;
-precedence left and, or, not;
+precedence left and, or, not, parentesisC;
 
 /* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
 start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
@@ -112,23 +112,30 @@ EXP::=EXP:val1 mas EXP:val2 {:RESULT=val1+"+"+val2;:}
     |EXP:val1 mul EXP:val2 {:RESULT=val1+"*"+val2;:}
     |EXP:val1 div EXP:val2 {:RESULT=val1+"/"+val2;:}
     |EXP:val1 modulo EXP:val2 {:RESULT=val1+"/"+val2;:}
-    |parentesisA EXP parentesisC
+    |parentesisA VALOR parentesisC
+    |parentesisA VALOR mas EXP parentesisC
+    |parentesisA VALOR menos EXP parentesisC
+    |parentesisA VALOR mul EXP parentesisC
+    |parentesisA VALOR div EXP parentesisC
+    |parentesisA VALOR modulo EXP parentesisC
+    |EXP LLAM2
     |VALOR mas mas
     |VALOR menos menos
-    |VALOR:val {:RESULT=val;:};
+    |VALOR;
 
-EXPSENT::=OPREL and OPREL
-         |OPREL or OPREL
-         |not OPREL
-         |OPREL;
+EXPSENT::= and OPREL
+         | or OPREL
+         | not OPREL
+         | OPREL
+         |;
 
-OPREL::=EXP mayorq OPREL
-       |EXP menorq OPREL
-       |EXP mayorIgual OPREL
-       |EXP menorIgual OPREL
-       |EXP igual igual OPREL
-       |EXP not igual OPREL
-       |EXP;
+OPREL::=EXP mayorq EXP EXPSENT
+       |EXP menorq EXP EXPSENT
+       |EXP mayorIgual EXP EXPSENT
+       |EXP menorIgual EXP EXPSENT
+       |EXP igual igual EXP EXPSENT
+       |EXP not igual EXP EXPSENT
+       |VALOR;
 
 VALOR::=entero:val {:RESULT=val;:} 
         |decimal:val {:RESULT=val;:}
@@ -146,17 +153,19 @@ COD::=MET COD
     |ASIGNACION COD
     |SENTENCIAS COD
     |LLAM COD
+    |INSTANCIA COD
     |;
 
 COD2::=DECLARACION COD2
     |ASIGNACION COD2
     |SENTENCIAS COD2
     |LLAM COD2
+    |INSTANCIA COD2
     |;
 
 MET::= ACCESO TIPO iden parentesisA PARAM parentesisC parA {:parser.al.add("inicio del metodo o funcion\n");:} COD2 SALIDA parC {:parser.al.add("fin del metodo o funcion\n");:};
 
-MAIN::=resPublic resStatic iden iden parentesisA resString iden corA corC parentesisC parA {:parser.al.add("inicio del metodo main\n");:} COD2 parC {:parser.al.add("fin del metodo main\n");:};
+MAIN::=resPublic resStatic resVoid iden parentesisA resString iden corA corC parentesisC parA {:parser.al.add("inicio del metodo main\n");:} COD2 parC {:parser.al.add("fin del metodo main\n");:};
 
 DECLARACION::= ACCESO TIPO LISTAID puntoYcoma {:parser.al.add("declaracion de variables\n");:};
 
@@ -181,10 +190,15 @@ ACCESO::=resPublic:val
     |resFinal:val
     |;
 
-PARAM::=iden:val {:RESULT=val;:}
-       |iden:val1 coma iden:val2 {:RESULT=val1+","+val2;:}
-       |TIPO iden 
-       |TIPO iden coma PARAM
+PARAM::=EXP:val {:RESULT=val;:}
+       |EXP:val1 coma PARAM:val2 {:RESULT=val1+","+val2;:}
+       |TIPO EXP 
+       |TIPO EXP coma PARAM
+       |VALOR mas PARAM
+       |VALOR menos PARAM
+       |VALOR mul PARAM
+       |VALOR div PARAM
+       |VALOR modulo PARAM
        |;
 
 SENTENCIAS::=SENTIF
@@ -193,26 +207,32 @@ SENTENCIAS::=SENTIF
             |SENTSWITCH
             |SENTDO;
 
-SENTIF::= resIf parentesisA EXPSENT parentesisC parA {:parser.al.add("inicio de la sentencia if\n");:} COD2 parC {:parser.al.add("fin de la sentencia if\n");:}
+SENTIF::= resIf parentesisA EXPSENT parentesisC parA {:parser.al.add("inicio de la sentencia if\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia if\n");:}
          |SENTIF SENTELSE;
 
-SENTELSE::=resElse parA {:parser.al.add("inicio de la sentencia else\n");:} COD2 parC {:parser.al.add("fin de la sentencia else\n");:};
+SENTELSE::=resElse parA {:parser.al.add("inicio de la sentencia else\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia else\n");:};
 
-SENTFOR::=resFor parentesisA ASIGNACION puntoYcoma OPREL puntoYcoma EXP parentesisC parA {:parser.al.add("inicio de la sentencia for\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia for\n");:};
+SENTFOR::=resFor parentesisA ASIGNACION EXPSENT puntoYcoma EXP parentesisC parA {:parser.al.add("inicio de la sentencia for\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia for\n");:}
+         |resFor parentesisA ASIGNACION EXPSENT puntoYcoma EXP igual PARAM parentesisC parA {:parser.al.add("inicio de la sentencia for\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia for\n");:};
 
 SENTWHILE::=resWhile parentesisA EXPSENT parentesisC parA {:parser.al.add("inicio de la sentencia while\n");:} COD2 SALIDA parC {:parser.al.add("fin de la sentencia while\n");:};
 
-SENTDO::=resDo parA {:parser.al.add("inicio de la sentencia Do\n");:} COD2 parC resWhile parentesisA EXPSENT parentesisC puntoYcoma {:parser.al.add("fin de la sentencia Do\n");:};
+SENTDO::=resDo parA {:parser.al.add("inicio de la sentencia Do\n");:} COD2 SALIDA parC resWhile parentesisA EXPSENT parentesisC puntoYcoma {:parser.al.add("fin de la sentencia Do\n");:};
 
-SENTSWITCH::=resSwitch parentesisA EXP parentesisC parA {:parser.al.add("inicio de la sentencia switch\n");:} resCase VALOR dosPuntos COD2 resBreak CASES resDefault dosPuntos COD2 parC {:parser.al.add("fin de la sentencia switch\n");:};
+SENTSWITCH::=resSwitch parentesisA EXP parentesisC parA {:parser.al.add("inicio de la sentencia switch\n");:} resCase VALOR dosPuntos COD2 SALIDA CASES DEFAULT parC {:parser.al.add("fin de la sentencia switch\n");:};
 
-CASES::= resCase VALOR dosPuntos COD2 resBreak puntoYcoma CASES
+CASES::= resCase VALOR dosPuntos COD2 SALIDA CASES
+        |;
+
+DEFAULT::= resDefault dosPuntos COD2 SALIDA
         |;
 
 SALIDA::= resBreak puntoYcoma {:parser.al.add("break\n");:}
         | resReturn EXP puntoYcoma {:parser.al.add("return\n");:}
         |;
 
-INSTANCIA::=iden iden igual iden iden parentesisA parentesisC puntoYcoma {:parser.al.add("instancia\n");:};
+INSTANCIA::=VALOR iden igual VALOR VALOR parentesisA PARAM parentesisC puntoYcoma {:parser.al.add("instancia\n");:};
 
 LLAM::=iden parentesisA PARAM parentesisC puntoYcoma {:parser.al.add("llamada de funcion\n");:};
+
+LLAM2::=parentesisA PARAM parentesisC;

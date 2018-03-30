@@ -70,6 +70,8 @@ bool=("verdadero"|"falso"|"1"|"0")
 <YYINITIAL> "break"            {return new Symbol(sym.resBreak,yycolumn,yyline,yytext());}
 <YYINITIAL> "return"            {return new Symbol(sym.resReturn,yycolumn,yyline,yytext());}
 <YYINITIAL> "default"            {return new Symbol(sym.resDefault,yycolumn,yyline,yytext());}
+<YYINITIAL> "void"            {return new Symbol(sym.resVoid,yycolumn,yyline,yytext());}
+<YYINITIAL> "static"            {return new Symbol(sym.resStatic,yycolumn,yyline,yytext());}
 
 
 //SIMBOLOS
