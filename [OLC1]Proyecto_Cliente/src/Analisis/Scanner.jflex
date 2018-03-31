@@ -22,7 +22,7 @@ entero =[0-9]+
 decimal =[0-9]+ "."? [0-9]*
 cadena =[\"] [^\"\n]* [\"\n]
 letra =[a-zA-ZÑñ]+
-iden ={letra}({letra}|{entero}|"_")*({letra}|{entero})*
+iden ={letra}({letra}|{entero}|"_"|" ")*({letra}|{entero})*
 caracter="'"[^]"'"
 bool=("verdadero"|"falso"|"1"|"0")
 %state COMENTARIO1,COMENTARIO2
@@ -48,40 +48,43 @@ bool=("verdadero"|"falso"|"1"|"0")
 %%
 
 //RESERVADAS
-<YYINITIAL> "<html"           {return new Symbol(sym.htmlA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\html>"         {return new Symbol(sym.htmlC,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<head"           {return new Symbol(sym.headA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\head>"         {return new Symbol(sym.headC,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<body"           {return new Symbol(sym.bodyA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\body>"         {return new Symbol(sym.bodyC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "<html>"          {return new Symbol(sym.htmlA,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</html>"         {return new Symbol(sym.htmlC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "<head>"           {return new Symbol(sym.headA,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</head>"         {return new Symbol(sym.headC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "<body>"           {return new Symbol(sym.bodyA,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</body>"         {return new Symbol(sym.bodyC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h1"             {return new Symbol(sym.h1A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h1>"           {return new Symbol(sym.h1C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h1>"           {return new Symbol(sym.h1C,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h2"             {return new Symbol(sym.h2A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h2>"           {return new Symbol(sym.h2C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h2>"           {return new Symbol(sym.h2C,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h3"             {return new Symbol(sym.h3A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h3>"           {return new Symbol(sym.h3C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h3>"           {return new Symbol(sym.h3C,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h4"             {return new Symbol(sym.h4A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h4>"           {return new Symbol(sym.h4C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h4>"           {return new Symbol(sym.h4C,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h5"             {return new Symbol(sym.h5A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h5>"           {return new Symbol(sym.h5C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h5>"           {return new Symbol(sym.h5C,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<h6"             {return new Symbol(sym.h6A,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\h6>"           {return new Symbol(sym.h6C,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<title"          {return new Symbol(sym.titleA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\title>"        {return new Symbol(sym.titleC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</h6>"           {return new Symbol(sym.h6C,yycolumn,yyline,yytext());}     
+<YYINITIAL> "<title>"          {return new Symbol(sym.titleA,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</title>"        {return new Symbol(sym.titleC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<table"          {return new Symbol(sym.tableA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\table>"        {return new Symbol(sym.tableC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</table>"        {return new Symbol(sym.tableC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<th"             {return new Symbol(sym.thA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\th>"           {return new Symbol(sym.thC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</th>"           {return new Symbol(sym.thC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<td"             {return new Symbol(sym.tdA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\td>"           {return new Symbol(sym.tdC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</td>"           {return new Symbol(sym.tdC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<tr"             {return new Symbol(sym.trA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\tr>"           {return new Symbol(sym.trC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</tr>"           {return new Symbol(sym.trC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<div"            {return new Symbol(sym.divA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\div>"          {return new Symbol(sym.divC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</div>"          {return new Symbol(sym.divC,yycolumn,yyline,yytext());}     
 <YYINITIAL> "<p"              {return new Symbol(sym.pA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\p>"            {return new Symbol(sym.pC,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<br"             {return new Symbol(sym.brA,yycolumn,yyline,yytext());}     
-<YYINITIAL> "<\br>"           {return new Symbol(sym.brC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "</p>"            {return new Symbol(sym.pC,yycolumn,yyline,yytext());}     
+<YYINITIAL> "<br>"             {return new Symbol(sym.br,yycolumn,yyline,yytext());}     
+<YYINITIAL> "color"           {return new Symbol(sym.col,yycolumn,yyline,yytext());}     
+<YYINITIAL> "textcolor"       {return new Symbol(sym.txtcol,yycolumn,yyline,yytext());}     
+<YYINITIAL> "align"           {return new Symbol(sym.alig,yycolumn,yyline,yytext());}     
+<YYINITIAL> "font"            {return new Symbol(sym.fon,yycolumn,yyline,yytext());}     
 <YYINITIAL> "rojo"            {return new Symbol(sym.rojo,yycolumn,yyline,yytext());}     
 <YYINITIAL> "amarillo"        {return new Symbol(sym.amarillo,yycolumn,yyline,yytext());}     
 <YYINITIAL> "azul"            {return new Symbol(sym.azul,yycolumn,yyline,yytext());}     

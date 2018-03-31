@@ -59,7 +59,7 @@ action code {:
 /*terminales reservados*/
 terminal String htmlA,htmlC,headA,headC,bodyA,bodyC,h1A,h1C,h2A,h2C,h3A,h3C,h4A,h4C,
                 h5A,h5C,h6A,h6C,titleA,titleC,tableA,tableC,thA,thC,tdA,tdC,trA,trC,
-                divA,divC,pA,pC,brA,brC,rojo,amarillo,azul,verde,gris,anaranjado,
+                divA,divC,pA,pC,br,col,txtcol,alig,fon,rojo,amarillo,azul,verde,gris,anaranjado,
                 morado,izquierda,derecha,centrado,afb,antiq,archi,arial,bf,bg,bl,bv,
                 calib,csm,cour,curs,deco,fanta,frank,garam,georg,helve,impact,minion,
                 modern,monos,os,pala,roman,sanss,serif,scri,swss,tms,tnr,tcm,ver,
@@ -81,14 +81,67 @@ terminal String entero,decimal,cadena,bool,iden,caracter;
 /*
 * Aquí están los no terminales
 */
-non terminal INICIO;
+non terminal INICIO,CUERPOHTML,CUERPOBODY,EXP,VALOR,EHA,ATRIBUTOS,ETRA,ETDHA,
+             EP,CUERPOP;
 
 
 /* Precedencia */
 precedence left mas, menos;
 precedence left mul, div, modulo;
+//precedence left entero, decimal, cadena, bool, iden, caracter;
 
 /* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
 start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
 
-INICIO::=mas;
+INICIO::=htmlA CUERPOHTML htmlC;
+
+CUERPOHTML::=headA titleA EXP titleC headC CUERPOHTML {:parser.al.add("Compilacion exitosa\n");:}
+            |bodyA CUERPOBODY CUERPOHTML bodyC CUERPOHTML
+            |;
+
+CUERPOBODY::=EHA CUERPOBODY
+            |tableA ATRIBUTOS mayorq ETRA tableC CUERPOBODY
+            |br CUERPOBODY
+            |EP CUERPOBODY
+            |;
+
+EXP::=EXP:val1 mas EXP:val2
+    |EXP:val1 menos EXP:val2 
+    |EXP:val1 mul EXP:val2 
+    |EXP:val1 div EXP:val2 
+    |EXP:val1 modulo EXP:val2 
+    |VALOR EXP
+    |VALOR;
+
+VALOR::=entero:val {:RESULT=val;:} 
+        |decimal:val {:RESULT=val;:}
+        |cadena:val {:RESULT=val;:}
+        |bool:val {:RESULT=val;:}
+        |iden:val {:RESULT=val;:}
+        |caracter:val {:RESULT=val;:};
+
+EHA::=h1A ATRIBUTOS mayorq EXP h1C
+     |h2A ATRIBUTOS mayorq EXP h2C
+     |h3A ATRIBUTOS mayorq EXP h3C
+     |h4A ATRIBUTOS mayorq EXP h4C
+     |h5A ATRIBUTOS mayorq EXP h5C
+     |h6A ATRIBUTOS mayorq EXP h6C;
+
+ETRA::=trA ATRIBUTOS mayorq ETDHA trC ETRA
+      |;
+
+ETDHA::=tdA ATRIBUTOS mayorq EXP tdC ETDHA
+       |thA mayorq EXP thC ETDHA
+       |;
+
+EP::=pA ATRIBUTOS mayorq CUERPOP pC;
+
+CUERPOP::=EXP br CUERPOP
+         |EXP 
+         |;
+
+ATRIBUTOS::=col igual cadena ATRIBUTOS
+           |txtcol igual cadena ATRIBUTOS
+           |alig igual cadena ATRIBUTOS
+           |fon igual cadena ATRIBUTOS
+           |;

@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>Proyecto1</title>
+	</head>
+	<body>
+		<h1 textcolor="azul" align="centrado">aqui va el texto</h1>
+		<table>
+			<tr>
+				<th>Encabezado1</th>
+			</tr>
+			<tr>
+				<td align="middle">Texto</td>
+			</tr>
+		</table>
+	</body>
+</html>
