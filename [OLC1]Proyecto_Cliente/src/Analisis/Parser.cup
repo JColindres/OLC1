@@ -59,17 +59,17 @@ action code {:
 /*terminales reservados*/
 terminal String htmlA,htmlC,headA,headC,bodyA,bodyC,h1A,h1C,h2A,h2C,h3A,h3C,h4A,h4C,
                 h5A,h5C,h6A,h6C,titleA,titleC,tableA,tableC,thA,thC,tdA,tdC,trA,trC,
-                divA,divC,pA,pC,br,col,txtcol,alig,fon,rojo,amarillo,azul,verde,gris,anaranjado,
+                divA,divC,pA,pC,br,hr,col,txtcol,alig,fon,rojo,amarillo,azul,verde,gris,anaranjado,
                 morado,izquierda,derecha,centrado,afb,antiq,archi,arial,bf,bg,bl,bv,
                 calib,csm,cour,curs,deco,fanta,frank,garam,georg,helve,impact,minion,
                 modern,monos,os,pala,roman,sanss,serif,scri,swss,tms,tnr,tcm,ver,
                 resString,resInt,resDouble,resChar,resBoolean,resPrint,resResult,
                 resScore,mas,menos,mul,div,modulo,menorq,menorIgual,mayorq,mayorIgual,
-                igualIgual,noIgual,igual,coma,puntoYcoma,dosPuntos,parA,parC,corA,corC,
-                llavA,llavC,punto,incre,decre,masIgual,menosIgual,mulIgual,dobleDolar,
-                and,or,not;
+                igualIgual,noIgual,igual,puntoYcoma,parA,parC,corA,corC,
+                punto,incre,decre,masIgual,menosIgual,mulIgual,dobleDolar,
+                and,or,not,resVar,resMet,resClases,resNom,resCant;
 
-terminal String entero,decimal,cadena,bool,iden,caracter;
+terminal String entero,decimal,cadena,bool,iden,caracter,comia;
 
 /*
 * Este terminal tiene un valor string. Recuerda que le dábamos el valor
@@ -81,35 +81,48 @@ terminal String entero,decimal,cadena,bool,iden,caracter;
 /*
 * Aquí están los no terminales
 */
-non terminal INICIO,CUERPOHTML,CUERPOBODY,EXP,VALOR,EHA,ATRIBUTOS,ETRA,ETDHA,
-             EP,CUERPOP;
+non terminal INICIO,CUERPOHTML,CUERPOBODY,EXP,VALOR,EHA,ATRIBUTOS,ETRA,ETDHA,ARIT,
+             EP,CUERPOP,EDIV,CUERPODIV,COLOR,ALINEACION,FUENTE,CPREPORT,CUERPOCPR,
+             ACCESOVARIABLE,DECLARACION,FUNCPRINT,CONTPRINT,TIPO,OPREL,OPLOG,OPASIG;
 
 
 /* Precedencia */
 precedence left mas, menos;
 precedence left mul, div, modulo;
 //precedence left entero, decimal, cadena, bool, iden, caracter;
+precedence left parA, parC;
 
 /* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
 start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
 
-INICIO::=htmlA CUERPOHTML htmlC;
+INICIO::=htmlA CUERPOHTML htmlC {:parser.al.add("Compilacion exitosa\n");:}
+        |CPREPORT;
 
-CUERPOHTML::=headA titleA EXP titleC headC CUERPOHTML {:parser.al.add("Compilacion exitosa\n");:}
+CUERPOHTML::=headA titleA EXP titleC headC CUERPOHTML 
             |bodyA CUERPOBODY CUERPOHTML bodyC CUERPOHTML
             |;
 
 CUERPOBODY::=EHA CUERPOBODY
             |tableA ATRIBUTOS mayorq ETRA tableC CUERPOBODY
             |br CUERPOBODY
+            |hr CUERPOBODY
             |EP CUERPOBODY
+            |EDIV CUERPOBODY
             |;
 
 EXP::=EXP:val1 mas EXP:val2
     |EXP:val1 menos EXP:val2 
     |EXP:val1 mul EXP:val2 
     |EXP:val1 div EXP:val2 
-    |EXP:val1 modulo EXP:val2 
+    |EXP:val1 modulo EXP:val2
+    |parA VALOR parC
+    |parA VALOR mas EXP parC
+    |parA VALOR menos EXP parC
+    |parA VALOR mul EXP parC
+    |parA VALOR div EXP parC
+    |parA VALOR modulo EXP parC
+    |VALOR incre
+    |VALOR decre 
     |VALOR EXP
     |VALOR;
 
@@ -140,8 +153,123 @@ CUERPOP::=EXP br CUERPOP
          |EXP 
          |;
 
+EDIV::=divA ATRIBUTOS mayorq CUERPODIV divC;
+
+CUERPODIV::=CUERPOBODY; 
+
 ATRIBUTOS::=col igual cadena ATRIBUTOS
            |txtcol igual cadena ATRIBUTOS
            |alig igual cadena ATRIBUTOS
            |fon igual cadena ATRIBUTOS
+           |col igual comia COLOR comia ATRIBUTOS
+           |txtcol igual comia COLOR comia ATRIBUTOS
+           |alig igual comia ALINEACION comia ATRIBUTOS
+           |fon igual comia FUENTE comia ATRIBUTOS
            |;
+
+COLOR::=rojo
+        |amarillo
+        |azul
+        |verde
+        |gris
+        |anaranjado
+        |morado;
+
+ALINEACION::=izquierda
+            |derecha
+            |centrado;
+
+FUENTE::=afb
+        |antiq
+        |archi
+        |arial
+        |bf
+        |bg
+        |bl
+        |bv
+        |calib
+        |csm
+        |cour
+        |curs
+        |deco
+        |fanta
+        |frank
+        |garam
+        |georg
+        |helve
+        |impact
+        |minion
+        |modern
+        |monos
+        |os
+        |pala
+        |roman
+        |sanss
+        |serif
+        |scri
+        |swss
+        |tms
+        |tnr
+        |tcm
+        |ver;
+
+CPREPORT::=dobleDolar CUERPOCPR dobleDolar {:parser.al.add("Compilacion exitosa\n");:}
+          |;
+
+CUERPOCPR::=ACCESOVARIABLE CUERPOCPR
+           |DECLARACION CUERPOCPR
+           |FUNCPRINT CUERPOCPR
+           |;
+
+FUNCPRINT::=resPrint parA CONTPRINT parC puntoYcoma;
+
+ACCESOVARIABLE::=resResult punto resScore 
+                |resResult punto resVar corA entero corC punto resNom
+                |resResult punto resVar
+                |resResult punto resVar punto resNom
+                |resResult punto resVar punto resCant
+                |resResult punto resMet corA entero corC punto resNom
+                |resResult punto resMet
+                |resResult punto resMet punto resNom
+                |resResult punto resMet punto resCant
+                |resResult punto resClases corA entero corC punto resNom
+                |resResult punto resClases
+                |resResult punto resClases punto resNom
+                |resResult punto resClases punto resCant;
+
+CONTPRINT::=EXP mas ACCESOVARIABLE 
+           |EXP OPREL
+           |ACCESOVARIABLE
+           |OPLOG
+           |ARIT;
+
+DECLARACION::=TIPO EXP OPASIG CONTPRINT puntoYcoma
+             |EXP OPASIG CONTPRINT puntoYcoma
+             |TIPO EXP corA OPASIG CONTPRINT corC puntoYcoma
+             |EXP corA OPASIG CONTPRINT corC puntoYcoma;
+
+TIPO::=resInt:val 
+    |resString:val 
+    |resBoolean:val
+    |resDouble:val
+    |resChar:val;
+
+OPASIG::=masIgual
+        |menosIgual 
+        |mulIgual
+        |igual;
+
+OPREL::= menorq EXP OPREL
+       | mayorq EXP OPREL
+       | menorIgual EXP OPREL
+       | mayorIgual EXP OPREL
+       | igualIgual EXP OPREL
+       | noIgual EXP OPREL
+       |;
+
+OPLOG::=and ARIT
+       |or ARIT
+       |not ARIT
+       |;
+      
+ARIT::=parA EXP OPREL parC OPLOG;     
