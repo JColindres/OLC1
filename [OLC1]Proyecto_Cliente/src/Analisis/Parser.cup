@@ -1,0 +1,94 @@
+
+package Analisis;
+
+import java.util.ArrayList;
+import java_cup.runtime.*;
+
+parser code
+{:
+
+    public ArrayList al = new ArrayList();
+    public ArrayList erroresS = new ArrayList();
+    public ArrayList erroresS1 = new ArrayList();
+
+
+    /**Metodo al que se llama automáticamente ante algún error sintactico.*/
+    public void syntax_error(Symbol s){
+        String lexema = s.value.toString();
+        int fila = s.right+1;
+        int columna = s.left+1;
+        
+        System.err.println("Error en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador '"
+        +s.value + "' no reconocido." );
+
+
+        erroresS.add("Error en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador '"
+        +s.value + "' no reconocido.\n");
+    }
+
+    /**Metodo al que se llama en el momento en que ya no es posible una recuperación de
+    errores.*/
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        String lexema = s.value.toString();
+        int fila = s.right+1;
+        int columna = s.left+1;
+
+        System.err.println("Error en la Línea " + (s.right+1)+ " Columna "+(s.left+1)+". Identificador '" +
+        s.value + "' no reconocido.");
+        
+        erroresS1.add("Error en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador '"
+        +s.value + "' no reconocido.\n");
+    }
+
+    /*public Nodo getRaiz(){
+        return action_obj.raiz;
+    }*/
+
+    
+
+:}
+
+
+action code {:
+    //Nodo raiz=null;
+    Sintactico sin = new Sintactico();
+    ArrayList corchetes = new ArrayList();
+    
+:}
+
+/*terminales reservados*/
+terminal String htmlA,htmlC,headA,headC,bodyA,bodyC,h1A,h1C,h2A,h2C,h3A,h3C,h4A,h4C,
+                h5A,h5C,h6A,h6C,titleA,titleC,tableA,tableC,thA,thC,tdA,tdC,trA,trC,
+                divA,divC,pA,pC,brA,brC,rojo,amarillo,azul,verde,gris,anaranjado,
+                morado,izquierda,derecha,centrado,afb,antiq,archi,arial,bf,bg,bl,bv,
+                calib,csm,cour,curs,deco,fanta,frank,garam,georg,helve,impact,minion,
+                modern,monos,os,pala,roman,sanss,serif,scri,swss,tms,tnr,tcm,ver,
+                resString,resInt,resDouble,resChar,resBoolean,resPrint,resResult,
+                resScore,mas,menos,mul,div,modulo,menorq,menorIgual,mayorq,mayorIgual,
+                igualIgual,noIgual,igual,coma,puntoYcoma,dosPuntos,parA,parC,corA,corC,
+                llavA,llavC,punto,incre,decre,masIgual,menosIgual,mulIgual,dobleDolar,
+                and,or,not;
+
+terminal String entero,decimal,cadena,bool,iden,caracter;
+
+/*
+* Este terminal tiene un valor string. Recuerda que le dábamos el valor
+* en el código del analizador léxico, al darle como parámetro un valor
+* string al objeto Symbolo.
+*/
+
+
+/*
+* Aquí están los no terminales
+*/
+non terminal INICIO;
+
+
+/* Precedencia */
+precedence left mas, menos;
+precedence left mul, div, modulo;
+
+/* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
+start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
+
+INICIO::=mas;
