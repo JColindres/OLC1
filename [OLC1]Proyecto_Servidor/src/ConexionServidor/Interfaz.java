@@ -275,6 +275,7 @@ public class Interfaz extends javax.swing.JFrame {
             for (int x = 0; x < sin.al.size(); x++) {
                 jTextArea2.append((String) sin.al.get(x));
             }
+            jTextArea2.append(sin.json);
             jTextArea3.setText("---------------Errores Sintacticos---------------\n\n");
             for (int x = 0; x < sin.erroresS.size(); x++) {
                 jTextArea3.append((String) sin.erroresS.get(x) + "\n");
