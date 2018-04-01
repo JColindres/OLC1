@@ -83,14 +83,16 @@ terminal String entero,decimal,cadena,bool,iden,caracter,comia;
 */
 non terminal INICIO,CUERPOHTML,CUERPOBODY,EXP,VALOR,EHA,ATRIBUTOS,ETRA,ETDHA,ARIT,
              EP,CUERPOP,EDIV,CUERPODIV,COLOR,ALINEACION,FUENTE,CPREPORT,CUERPOCPR,
-             ACCESOVARIABLE,DECLARACION,FUNCPRINT,CONTPRINT,TIPO,OPREL,OPLOG,OPASIG;
+             ACCESOVARIABLE,DECLARACION,FUNCPRINT,CONTPRINT,TIPO,OPREL,OPLOG,OPASIG,
+             CUERPO;
 
 
 /* Precedencia */
 precedence left mas, menos;
 precedence left mul, div, modulo;
-//precedence left entero, decimal, cadena, bool, iden, caracter;
+precedence left entero, decimal, cadena, bool, iden, caracter;
 precedence left parA, parC;
+precedence left htmlC, headA, dobleDolar, bodyA, bodyC;
 
 /* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
 start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
@@ -99,7 +101,9 @@ INICIO::=htmlA CUERPOHTML htmlC {:parser.al.add("Compilacion exitosa\n");:}
         |CPREPORT;
 
 CUERPOHTML::=headA titleA EXP titleC headC CUERPOHTML 
+            |headA titleA CPREPORT titleC headC CUERPOHTML
             |bodyA CUERPOBODY CUERPOHTML bodyC CUERPOHTML
+            |CPREPORT CUERPOHTML
             |;
 
 CUERPOBODY::=EHA CUERPOBODY
@@ -108,7 +112,12 @@ CUERPOBODY::=EHA CUERPOBODY
             |hr CUERPOBODY
             |EP CUERPOBODY
             |EDIV CUERPOBODY
+            |CPREPORT CUERPOBODY
             |;
+
+CUERPO::=EXP CUERPO
+        |CPREPORT CUERPO
+        |;
 
 EXP::=EXP:val1 mas EXP:val2
     |EXP:val1 menos EXP:val2 
@@ -133,24 +142,26 @@ VALOR::=entero:val {:RESULT=val;:}
         |iden:val {:RESULT=val;:}
         |caracter:val {:RESULT=val;:};
 
-EHA::=h1A ATRIBUTOS mayorq EXP h1C
-     |h2A ATRIBUTOS mayorq EXP h2C
-     |h3A ATRIBUTOS mayorq EXP h3C
-     |h4A ATRIBUTOS mayorq EXP h4C
-     |h5A ATRIBUTOS mayorq EXP h5C
-     |h6A ATRIBUTOS mayorq EXP h6C;
+EHA::=h1A ATRIBUTOS mayorq CUERPO h1C
+     |h2A ATRIBUTOS mayorq CUERPO h2C
+     |h3A ATRIBUTOS mayorq CUERPO h3C
+     |h4A ATRIBUTOS mayorq CUERPO h4C
+     |h5A ATRIBUTOS mayorq CUERPO h5C
+     |h6A ATRIBUTOS mayorq CUERPO h6C;
 
 ETRA::=trA ATRIBUTOS mayorq ETDHA trC ETRA
       |;
 
-ETDHA::=tdA ATRIBUTOS mayorq EXP tdC ETDHA
-       |thA mayorq EXP thC ETDHA
+ETDHA::=tdA ATRIBUTOS mayorq CUERPO tdC ETDHA
+       |thA mayorq CUERPO thC ETDHA
        |;
 
 EP::=pA ATRIBUTOS mayorq CUERPOP pC;
 
 CUERPOP::=EXP br CUERPOP
-         |EXP 
+         |EXP CUERPOP
+         |CPREPORT br CUERPOP
+         |CPREPORT CUERPOP
          |;
 
 EDIV::=divA ATRIBUTOS mayorq CUERPODIV divC;
@@ -213,8 +224,7 @@ FUENTE::=afb
         |tcm
         |ver;
 
-CPREPORT::=dobleDolar CUERPOCPR dobleDolar {:parser.al.add("Compilacion exitosa\n");:}
-          |;
+CPREPORT::=dobleDolar CUERPOCPR dobleDolar {:parser.al.add("Compilacion exitosa\n");:};
 
 CUERPOCPR::=ACCESOVARIABLE CUERPOCPR
            |DECLARACION CUERPOCPR

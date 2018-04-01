@@ -79,7 +79,7 @@ non terminal INICIO,COD,COD2,DECLARACION,ASIGNACION,DYA,EXP,TIPO,ACCESO,OPLOG,
              LISTAID,VALOR,METMAIN,PARAMETRO,SENTENCIA,ARREGLOS,ARRLISTA,/*EXPIMP,
              EXPIMP2,*/IMP,MET,COD3,DYA2,LISTAPARAM,FUNCION,SENTIF,CONDICION,SENTELSE,
              SENTELSEIF,SENTWHILE,SENTFOR,CICLOS,NUM,SENTDOWHILE,SENTSWITCH,
-             CUERPOSWITCH,SALIRW,SALIRF,LLAMFUNC,PARAMFUNC,ASGARR,RETORNO,LLAMARR;
+             CUERPOSWITCH,SIGNO,SALIRW,SALIRF,LLAMFUNC,PARAMFUNC,ASGARR,RETORNO,LLAMARR;
 
 
 /* Precedencia */
@@ -91,6 +91,8 @@ precedence left parentesisA,parentesisC;
 precedence left and2;
 precedence left resReturn;
 precedence left corA;
+precedence left exit;
+precedence left menorq,mayorq,menorIgual,mayorIgual,igual,menorMayor;
 
 /* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
 start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
@@ -146,6 +148,8 @@ COD3::=DECLARACION COD3
     |CICLOS COD3
     |Comentario1 COD3
     |Comentario2 COD3
+    |SALIRW COD3
+    |SALIRF COD3
     |RETORNO COD3
     |LLAMFUNC:val COD {:parser.al.add("\t"+val+";\n");:}
     | {:RESULT="";:};
@@ -180,8 +184,10 @@ ACCESO::=resPublic:val {:RESULT="public";:}
 LISTAID::=iden:id2 {:RESULT=id2;:}
         |iden:id coma LISTAID:id1 {:RESULT=id+","+id1;:};
 
-ASIGNACION::=iden:id igual EXP:dato {:System.out.println("\t"+ id + " = " + dato +";");
-                                      parser.al.add("\t"+ id + " = " + dato +";\n");:};
+ASIGNACION::=iden:id igual EXP:dato {:parser.al.add("\t"+ id + " = " + dato +";\n");:}
+            |iden:id igual LLAMFUNC:dato {:parser.al.add("\t"+ id + " = " + dato +";\n");:}
+            |iden:id igual LLAMARR:dato {:parser.al.add("\t"+ id + " = " + dato +";\n");:}
+            |iden:id igual crl {:parser.al.add("\t"+id+" = sc.nextInt();\n");:};
 
 EXP::=EXP:val1 mas EXP:val2 {:RESULT=val1+"+"+val2;:}
     |EXP:val1 menos EXP:val2 {:RESULT=val1+"-"+val2;:}
@@ -209,6 +215,12 @@ EXP::=EXP:val1 mas EXP:val2 {:RESULT=val1+"+"+val2;:}
     |LLAMARR:val1 div EXP:val2 {:RESULT=val1+"/"+val2;:}
     |LLAMARR:val1 and2 EXP:val2 {:RESULT=val1+"+"+val2;:}
     |VALOR:val1 and2 EXP:val2 {:RESULT=val1+" + "+val2;:}
+    |EXP:val1 menorq EXP:val2 {:RESULT=val1+"<"+val2;:}
+    |EXP:val1 menorIgual EXP:val2 {:RESULT=val1+"<="+val2;:}
+    |EXP:val1 mayorq EXP:val2 {:RESULT=val1+">"+val2;:}
+    |EXP:val1 mayorIgual EXP:val2 {:RESULT=val1+">="+val2;:}
+    |EXP:val1 menorMayor EXP:val2 {:RESULT=val1+"!="+val2;:}
+    |EXP:val1 igual EXP:val2  {:RESULT=val1+"=="+val2;:}
     |iden:id corA VALOR:id1 coma VALOR:id2 corC {:RESULT=id+"["+id1+"]"+id2;:};
 
 LLAMFUNC::=VALOR:val1 parentesisA PARAMFUNC:pf parentesisC {:RESULT=val1+"("+pf+")";:};
@@ -234,12 +246,16 @@ NUM::=entero:val {:RESULT=val;:}
         |decimal:val {:RESULT=val;:};
 
 DYA::=ACCESO:acc iden:id as TIPO:tipo igual EXP:dato {:parser.al.add("\t"+acc+" "+tipo+" "+id+" = "+dato+";\n");:}
-     |iden:id as TIPO:tipo igual EXP:dato {:parser.al.add("\t"+tipo+" "+id+" = "+dato+";\n");:};
+     |ACCESO:acc iden:id as TIPO:tipo igual LLAMARR:dato {:parser.al.add("\t"+acc+" "+tipo+" "+id+" = "+dato+";\n");:}
+     |ACCESO:acc iden:id as TIPO:tipo igual LLAMFUNC:dato {:parser.al.add("\t"+acc+" "+tipo+" "+id+" = "+dato+";\n");:}
+     |iden:id as TIPO:tipo igual EXP:dato {:parser.al.add("\t"+tipo+" "+id+" = "+dato+";\n");:}
+     |iden:id as TIPO:tipo igual LLAMARR:dato {:parser.al.add("\t"+tipo+" "+id+" = "+dato+";\n");:}
+     |iden:id as TIPO:tipo igual LLAMFUNC:dato {:parser.al.add("\t"+tipo+" "+id+" = "+dato+";\n");:};
 
 DYA2::=ACCESO:acc iden:id as TIPO:tipo igual crl {:if(tipo=="String"){parser.al.add("\t"+acc+" "+tipo+" "+id+" = sc.nextLine();\n");}else{parser.al.add("\t"+acc+" int "+id+" = sc.nextInt();\n");};:}
      |iden:id as TIPO:tipo igual crl {:if(tipo=="String"){parser.al.add("\t"+tipo+" "+id+" = sc.nextLine();\n");}else{parser.al.add("\t"+"int "+id+" = sc.nextInt();\n");};:};
 
-METMAIN::=sub main parentesisA parentesisC {:System.out.println("\t"+"public static void main(String[] args){\n\t");
+METMAIN::=ACCESO sub main parentesisA parentesisC {:System.out.println("\t"+"public static void main(String[] args){\n\t");
                                              parser.al.add("\t"+"public static void main(String[] args){\n\t");:} 
           SENTENCIA:val end sub {:System.out.println("\n\t}");
                                    parser.al.add("\n\t}\n");:};
@@ -249,8 +265,8 @@ SENTENCIA::=COD2:val;
 ARREGLOS::=ACCESO:acc iden:id corA ARRLISTA:val corC as TIPO:tipo {:String cor="";for(int i=0;i<corchetes.size();i++){cor+="[]";};parser.al.add("\t"+acc+" "+tipo+" "+cor+" "+id+" = new "+tipo+" "+val+";\n");corchetes.clear();:}
           |iden:id corA ARRLISTA:val corC as TIPO:tipo {:String cor="";for(int i=0;i<corchetes.size();i++){cor+="[]";};parser.al.add("\t"+tipo+" "+cor+" "+id+" = new "+tipo+" "+val+";\n");corchetes.clear();:};
 
-ARRLISTA::=iden:val {:RESULT="["+val+"]";corchetes.add(RESULT);:}
-          |iden:val coma ARRLISTA:val1 {:RESULT="["+val+"]"+val1;corchetes.add(RESULT);:};
+ARRLISTA::=EXP:val {:RESULT="["+val+"]";corchetes.add(RESULT);:}
+          |EXP:val coma ARRLISTA:val1 {:RESULT="["+val+"]"+val1;corchetes.add(RESULT);:};
 
 ASGARR::=iden:id corA ARRLISTA:val corC igual EXP:expp {:parser.al.add("\t"+id+val+" = "+expp+";\n");:};
 
@@ -263,7 +279,8 @@ EXPIMP::=iden:id parentesisA iden:id1 coma iden:id2 parentesisC {:RESULT=id+"["+
 EXPIMP2::= and2 EXPIMP:val {:RESULT=" + "+val;:}
         | {:RESULT="";:};
 */
-MET::=ACCESO:acc sub iden:id parentesisA LISTAPARAM:lp parentesisC {:parser.al.add("\t"+acc+" void "+id+" ("+lp+"){\n\t");:} COD3:cod end sub {:parser.al.add("\t}\n");:};
+MET::=ACCESO:acc sub iden:id parentesisA LISTAPARAM:lp parentesisC {:String a=acc+" static";parser.al.add("\t"+a+" void "+id+" ("+lp+"){\n\t");:} COD3:cod end sub {:parser.al.add("\t}\n");:}
+     |sub iden:id parentesisA LISTAPARAM:lp parentesisC {:parser.al.add("\t"+"void "+id+" ("+lp+"){\n\t");:} COD3:cod end sub {:parser.al.add("\t}\n");:};
 
 LISTAPARAM::=PARAMETRO:val {:RESULT=val;:}
             |PARAMETRO:val coma LISTAPARAM:val1 {:RESULT=val+" , "+val1;:}
@@ -271,7 +288,8 @@ LISTAPARAM::=PARAMETRO:val {:RESULT=val;:}
 
 PARAMETRO::=byval iden:id as TIPO:tipo {:RESULT=tipo+" "+id;:};
 
-FUNCION::=ACCESO:acc func iden:id parentesisA LISTAPARAM:lp parentesisC as TIPO:tipo {:parser.al.add("\t"+acc+" "+tipo+" "+id+" ("+lp+"){\n");:} COD3:cod end func {:parser.al.add("\n\t}\n");:};
+FUNCION::=ACCESO:acc func iden:id parentesisA LISTAPARAM:lp parentesisC as TIPO:tipo {:parser.al.add("\t"+acc+" "+tipo+" "+id+" ("+lp+"){\n");:} COD3:cod end func {:parser.al.add("\n\t}\n");:}
+         |func iden:id parentesisA LISTAPARAM:lp parentesisC as TIPO:tipo {:parser.al.add("\t"+tipo+" "+id+" ("+lp+"){\n");:} COD3:cod end func {:parser.al.add("\n\t}\n");:};
 
 SENTIF::=resIf CONDICION:cond resThen {:parser.al.add("\t"+"if("+cond+"){\n\t");:} COD3:cod {:parser.al.add("\n\t}\n");:} SENTELSEIF:elsif SENTELSE:els end resIf {:parser.al.add(elsif);:} {:parser.al.add(els);:};
 
@@ -288,37 +306,41 @@ OPLOG::=and CONDICION:con2 {:RESULT=" && "+con2;:}
        |not CONDICION:con2 {:RESULT=" ! "+con2;:}
        | {:RESULT="";:};
 
-SENTELSE::=resElse:val1 {:parser.al.add("\t"+val1+"{\n\t");:} COD3:val2 {:parser.al.add("\n\t}\n");:}
+SENTELSE::=resElse:val1 {:parser.al.add("\t"+"else"+"{\n\t");:} COD3:val2 {:parser.al.add("\n\t}\n");:}
           | {:RESULT="";:};
 
 SENTELSEIF::=resElseIf CONDICION:cond resThen {:parser.al.add("\t"+"else if("+cond+"){\n\t");:} COD3:cod {:parser.al.add("\n\t}\n");:} SENTELSEIF
             | {:RESULT="";:};
 
-SENTWHILE::= resWhile CONDICION:cond {:parser.al.add("\t"+"While("+cond+"){\n\t");:} COD3:cod SALIRW end resWhile {:parser.al.add("\n\t}\n");:};
+SENTWHILE::= resWhile CONDICION:cond {:parser.al.add("\t"+"while("+cond+"){\n\t");:} COD3:cod end resWhile {:parser.al.add("\n\t}\n");:};
 
-SENTFOR::=resFor iden:id as TIPO:tipo igual NUM:inicio resTo:signo NUM:fin step NUM:salto {:int primero = Integer.parseInt(inicio.toString());
+SENTFOR::=resFor iden:id as TIPO:tipo igual NUM:inicio resTo:signo EXP:fin step SIGNO:sig NUM:salto {:/*int primero = Integer.parseInt(inicio.toString());
                                                                                             int segundo = Integer.parseInt(fin.toString());
-                                                                                            if(primero < segundo){
-                                                                                            parser.al.add("\t"+"for("+"int"+" "+id+" = "+inicio+"; "+id+" < "+fin+"; "+id+" = "+id+" + ("+salto+") ){\n\t");
-                                                                                            } else{
-                                                                                            parser.al.add("\t"+"for("+"int"+" "+id+" = "+inicio+"; "+id+" > "+fin+"; "+id+" = "+id+" + ("+salto+") ){\n\t");
-                                                                                            }:} COD3:cod SALIRF next {:parser.al.add("\n\t}\n");:};
+                                                                                            if(primero < segundo){*/
+                                                                                            parser.al.add("\t"+"for("+"int"+" "+id+" = "+inicio+"; "+id+" < "+fin+"; "+id+" = "+id+" + ("+sig+salto+") ){\n\t");
+                                                                                            /*} else{
+                                                                                            parser.al.add("\t"+"for("+"int"+" "+id+" = "+inicio+"; "+id+" > "+fin+"; "+id+" = "+id+" + ("+sig+salto+") ){\n\t");
+                                                                                            }*/:} COD3:cod next {:parser.al.add("\n\t}\n");:};
 
-SENTDOWHILE::=resDo {:parser.al.add("\tDo{\n\t");:} COD3:cod loopUntil CONDICION:cond {:parser.al.add("\t} while("+cond+");\n");:};
+SIGNO::=mas:val {:RESULT=val;:}
+        |menos:val {:RESULT=val;:}
+        |mul:val {:RESULT=val;:}
+        |div:val {:RESULT=val;:}
+        |{:RESULT="";:};
 
-SENTSWITCH::=select resCase iden:id {:parser.al.add("\tswitch("+id+") {\n\t");:} resCase VALOR:val {:parser.al.add("\tCase "+val+":\n\t");:} COD3:cod {:parser.al.add("\tbreak;\n\t");:} CUERPOSWITCH:cs end select {:parser.al.add("\n\t}\n");:};
+SENTDOWHILE::=resDo {:parser.al.add("\tdo{\n\t");:} COD3:cod loopUntil CONDICION:cond {:parser.al.add("\t} while("+cond+");\n");:};
 
-CUERPOSWITCH::=resCase VALOR:val {:parser.al.add("\tCase "+val+":\n\t");:} COD3:cod {:parser.al.add("\tbreak;\n\t");:} CUERPOSWITCH:cs
+SENTSWITCH::=select resCase iden:id {:parser.al.add("\tswitch("+id+") {\n\t");:} resCase VALOR:val {:parser.al.add("\tcase "+val+":\n\t");:} COD3:cod {:parser.al.add("\tbreak;\n\t");:} CUERPOSWITCH:cs end select {:parser.al.add("\n\t}\n");:};
+
+CUERPOSWITCH::=resCase VALOR:val {:parser.al.add("\tcase "+val+":\n\t");:} COD3:cod {:parser.al.add("\tbreak;\n\t");:} CUERPOSWITCH:cs
               |resCase resElse {:parser.al.add("\tdefault:\n\t");:} COD3:cod
               | {:RESULT="";:};
 
-SALIRW::=exit resWhile {:parser.al.add("\tbreak;\n\t");:}
-       | {:RESULT="";:};
+SALIRW::=exit resWhile {:parser.al.add("\tbreak;\n\t");:};
 
-SALIRF::=exit resFor {:parser.al.add("\tbreak;\n\t");:}
-       | {:RESULT="";:};
+SALIRF::=exit resFor {:parser.al.add("\tbreak;\n\t");:};
 
-RETORNO::=resReturn EXP:val {:parser.al.add("\treturn "+val+"\n");:};
+RETORNO::=resReturn EXP:val {:parser.al.add("\treturn "+val+";\n");:};
 
 
 

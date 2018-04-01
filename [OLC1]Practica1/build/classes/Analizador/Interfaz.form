@@ -77,15 +77,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
               <Component id="Fila" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="FilaVB" min="-2" pref="38" max="-2" attributes="0"/>
-              <EmptySpace pref="297" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Component id="Fila2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="ColumnaVB" min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace pref="195" max="32767" attributes="0"/>
               <Component id="Fila1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="FilaJava" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="166" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+              <Component id="Fila3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="ColumnaJava" min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -112,10 +120,18 @@
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="Fila" min="-2" max="-2" attributes="0"/>
-                  <Component id="FilaVB" min="-2" max="-2" attributes="0"/>
-                  <Component id="Fila1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="FilaJava" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Component id="Fila" min="-2" max="-2" attributes="0"/>
+                          <Component id="FilaVB" min="-2" max="-2" attributes="0"/>
+                          <Component id="Fila1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="FilaJava" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="Fila2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="Fila3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ColumnaVB" min="-2" max="-2" attributes="0"/>
+                  <Component id="ColumnaJava" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -132,15 +148,10 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="java.awt.TextArea" name="textArea1">
-          <Properties>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Texto"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="textArea1MouseClicked"/>
-          </Events>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Visual Basic">
@@ -148,7 +159,20 @@
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea1">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+              <Events>
+                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="jTextArea1CaretUpdate"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
@@ -158,10 +182,10 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="java.awt.TextArea" name="textArea2">
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="textArea2MouseClicked"/>
-          </Events>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Java">
@@ -169,14 +193,30 @@
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea2">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+              <Events>
+                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="jTextArea2CaretUpdate"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane3">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="java.awt.TextArea" name="textArea3">
+        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Errores Sintacticos">
@@ -184,12 +224,22 @@
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea3">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Component class="java.awt.Label" name="Fila">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Posicion:"/>
+        <Property name="text" type="java.lang.String" value="Fila:"/>
       </Properties>
     </Component>
     <Component class="java.awt.Label" name="FilaVB">
@@ -210,14 +260,17 @@
     </Component>
     <Component class="java.awt.Label" name="Fila1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Posicion:"/>
+        <Property name="text" type="java.lang.String" value="Fila:"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane4">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Component class="java.awt.TextArea" name="textArea4">
+        <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Errores Lexicos">
@@ -225,8 +278,38 @@
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
-        </Component>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="jTextArea4">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
+    <Component class="java.awt.Label" name="Fila2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Columna:"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="ColumnaVB">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="Fila3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Columna:"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="ColumnaJava">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
