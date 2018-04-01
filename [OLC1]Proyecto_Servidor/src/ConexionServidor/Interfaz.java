@@ -37,6 +37,7 @@ import javax.swing.text.BadLocationException;
  *
  * @author piplo10
  */
+
 public class Interfaz extends javax.swing.JFrame {
 
     public Interfaz() {
@@ -384,6 +385,9 @@ public class Interfaz extends javax.swing.JFrame {
                 new Interfaz().setVisible(true);
             }
         });
+        
+        Servidor ser = new Servidor();
+        ser.run();
     }
 
 

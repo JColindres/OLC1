@@ -10,6 +10,9 @@ parser code
     public ArrayList al = new ArrayList();
     public ArrayList erroresS = new ArrayList();
     public ArrayList erroresS1 = new ArrayList();
+    public ArrayList al = new ArrayList();
+    public ArrayList erroresS = new ArrayList();
+    public ArrayList erroresS1 = new ArrayList();
     
     public int score = 0;
     public String clases = " ";

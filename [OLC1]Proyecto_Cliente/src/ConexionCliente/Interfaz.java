@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.*;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -263,38 +265,162 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 
-        String entrada = jTextArea1.getText();
-        Lexico lex = new Lexico(new BufferedReader(new StringReader(entrada)));
-        Sintactico sin = new Sintactico(lex);
-        try {
+        JFileChooser file=new JFileChooser();
+        file.setDialogTitle("Seleccionar primer proyecto");
+        file.showOpenDialog(this);
+   
+        /**abrimos el archivo seleccionado*/
+        File abre=file.getCurrentDirectory(); 
+        System.out.println(abre);
+    
+        // Aquí la carpeta que queremos explorar
+        String path = String.valueOf(abre); 
 
-            sin.parse();
-            jTextArea2.setText("");
-            jTextArea3.setText("");
-            jTextArea4.setText("");
-            for (int x = 0; x < sin.al.size(); x++) {
-                jTextArea2.append((String) sin.al.get(x));
-            }
-            jTextArea3.setText("---------------Errores Sintacticos---------------\n\n");
-            for (int x = 0; x < sin.erroresS.size(); x++) {
-                jTextArea3.append((String) sin.erroresS.get(x) + "\n");
-            }
-            for (int x = 0; x < sin.erroresS1.size(); x++) {
-                jTextArea3.append((String) sin.erroresS1.get(x) + "\n");
-            }
-            jTextArea4.setText("---------------Errores Lexicos-------------------\n\n");
-            for (int x = 0; x < lex.erroresL.size(); x++) {
-                jTextArea4.append((String) lex.erroresL.get(x));
-            }
-            jTextArea2.append("\n");
-            jTextArea3.append("\n");
-            jTextArea4.append("\n");
+        String files;
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles(); 
 
-        } catch (Exception ex) {
+        for (int i = 0; i < listOfFiles.length; i++) 
+        {
 
-            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+            if (listOfFiles[i].isFile()) 
+            {
+                files = listOfFiles[i].getName();
+                if (files.endsWith(".java") || files.endsWith(".JAVA"))
+                {
+                     DataInputStream input;
+                     BufferedInputStream bis;
+                     BufferedOutputStream bos;
+                     int in;
+                     byte[] byteArray;
+                     //Fichero a transferir
+                     final String filename = abre+"\\"+files;
+ 
+                     try{
+                        final File localFile = new File( filename );
+                        Socket client = new Socket("localhost", 5000);
 
+                        bis = new BufferedInputStream(new FileInputStream(localFile));
+                        bos = new BufferedOutputStream(client.getOutputStream());
+                        
+                        
+                        //Enviamos el nombre del fichero
+                        DataOutputStream dos=new DataOutputStream(client.getOutputStream());
+                        dos.writeUTF("archivo");
+                        dos.writeUTF("1");
+                        dos.writeUTF(localFile.getName());
+                        //Enviamos el fichero
+                        byteArray = new byte[8192];
+                        while ((in = bis.read(byteArray)) != -1){
+                            bos.write(byteArray,0,in);
+                        }
+ 
+                        bis.close();
+                        bos.close();
+ 
+                    }catch ( Exception e ) {
+                            System.err.println(e);
+                    }
+                    //System.out.println();
+                }
+            }
         }
+        System.out.println("Fin");
+        
+        //////////////////////////segunda parte////////////////////////
+        JFileChooser file2=new JFileChooser();
+        file2.setDialogTitle("Seleccionar segundo proyecto");
+        file2.showOpenDialog(this);
+   
+        /**abrimos el archivo seleccionado*/
+        File abre2=file2.getCurrentDirectory(); 
+        System.out.println(abre2);
+    
+        // Aquí la carpeta que queremos explorar
+        String path2 = String.valueOf(abre2); 
+
+        String files2;
+        File folder2 = new File(path2);
+        File[] listOfFiles2 = folder2.listFiles(); 
+
+        for (int i = 0; i < listOfFiles2.length; i++) 
+        {
+
+            if (listOfFiles2[i].isFile()) 
+            {
+                files2 = listOfFiles2[i].getName();
+                if (files2.endsWith(".java") || files2.endsWith(".JAVA"))
+                {
+                     DataInputStream input;
+                     BufferedInputStream bis;
+                     BufferedOutputStream bos;
+                     int in;
+                     byte[] byteArray;
+                     //Fichero a transferir
+                     final String filename = abre2+"\\"+files2;
+ 
+                     try{
+                        final File localFile = new File( filename );
+                        Socket client = new Socket("localhost", 5000);
+
+                        bis = new BufferedInputStream(new FileInputStream(localFile));
+                        bos = new BufferedOutputStream(client.getOutputStream());
+                        
+                        
+                        //Enviamos el nombre del fichero
+                        DataOutputStream dos=new DataOutputStream(client.getOutputStream());
+                        dos.writeUTF("archivo");
+                        dos.writeUTF("2");
+                        dos.writeUTF(localFile.getName());
+                        //Enviamos el fichero
+                        byteArray = new byte[8192];
+                        while ((in = bis.read(byteArray)) != -1){
+                            bos.write(byteArray,0,in);
+                        }
+ 
+                        bis.close();
+                        bos.close();
+ 
+                    }catch ( Exception e ) {
+                            System.err.println(e);
+                    }
+                    //System.out.println();
+                }
+            }
+        }
+        System.out.println("Fin");
+        
+                    DataInputStream input;
+                     BufferedInputStream bis;
+                     BufferedOutputStream bos;
+                     int in;
+                     byte[] byteArray;
+                     //Fichero a transferir
+                     
+ 
+                     try{
+       
+                        Socket client = new Socket("localhost", 5000);
+
+                        //bis = new BufferedInputStream(new FileInputStream(localFile));
+                        bos = new BufferedOutputStream(client.getOutputStream());
+                        
+                        
+                        //Enviamos el nombre del fichero
+                        DataOutputStream dos=new DataOutputStream(client.getOutputStream());
+                        dos.writeUTF("leer");
+                        //dos.writeUTF("2");
+                        //Enviamos el fichero
+                        //byteArray = new byte[8192];
+                        //while ((in = bis.read(byteArray)) != -1){
+                          //  bos.write(byteArray,0,in);
+                        //}
+ 
+                        //bis.close();
+                        bos.close();
+                    }catch ( Exception e ) {
+                            System.err.println(e);
+                    }
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
