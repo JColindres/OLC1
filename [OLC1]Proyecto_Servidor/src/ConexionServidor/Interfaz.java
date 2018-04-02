@@ -7,37 +7,23 @@ package ConexionServidor;
 
 import Analisis.Lexico;
 import Analisis.Sintactico;
-import java.awt.FileDialog;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JTextArea;
-import javax.swing.event.CaretEvent;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
 
 /**
  *
  * @author piplo10
  */
-
 public class Interfaz extends javax.swing.JFrame {
 
     public Interfaz() {
@@ -300,6 +286,39 @@ public class Interfaz extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    public void errores(String entrada){
+        Lexico lex = new Lexico(new BufferedReader(new StringReader(entrada)));
+        Sintactico sin = new Sintactico(lex);
+        try {
+
+            sin.parse();
+            jTextArea2.setText("");
+            jTextArea3.setText("");
+            jTextArea4.setText("");
+            for (int x = 0; x < sin.al.size(); x++) {
+                jTextArea2.append((String) sin.al.get(x));
+            }
+            jTextArea2.append(sin.json);
+            jTextArea3.setText("---------------Errores Sintacticos---------------\n\n");
+            for (int x = 0; x < sin.erroresS.size(); x++) {
+                jTextArea3.append((String) sin.erroresS.get(x) + "\n");
+            }
+            for (int x = 0; x < sin.erroresS1.size(); x++) {
+                jTextArea3.append((String) sin.erroresS1.get(x) + "\n");
+            }
+            jTextArea4.setText("---------------Errores Lexicos-------------------\n\n");
+            for (int x = 0; x < lex.erroresL.size(); x++) {
+                jTextArea4.append((String) lex.erroresL.get(x));
+            }
+            jTextArea3.append("\n");
+            jTextArea4.append("\n");
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
@@ -327,10 +346,10 @@ public class Interfaz extends javax.swing.JFrame {
     private void jTextArea1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextArea1CaretUpdate
         int pos = evt.getDot();
         try {
-            int fila = jTextArea1.getLineOfOffset(pos)+1;
-            int columna = pos - jTextArea1.getLineStartOffset(fila-1)+1;
-            FilaVB.setText(fila+"");
-            ColumnaVB.setText(columna+"");
+            int fila = jTextArea1.getLineOfOffset(pos) + 1;
+            int columna = pos - jTextArea1.getLineStartOffset(fila - 1) + 1;
+            FilaVB.setText(fila + "");
+            ColumnaVB.setText(columna + "");
         } catch (BadLocationException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -339,15 +358,14 @@ public class Interfaz extends javax.swing.JFrame {
     private void jTextArea2CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextArea2CaretUpdate
         int pos = evt.getDot();
         try {
-            int fila = jTextArea2.getLineOfOffset(pos)+1;
-            int columna = pos - jTextArea2.getLineStartOffset(fila-1)+1;
-            FilaJava.setText(fila+"");
-            ColumnaJava.setText(columna+"");
+            int fila = jTextArea2.getLineOfOffset(pos) + 1;
+            int columna = pos - jTextArea2.getLineStartOffset(fila - 1) + 1;
+            FilaJava.setText(fila + "");
+            ColumnaJava.setText(columna + "");
         } catch (BadLocationException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTextArea2CaretUpdate
-
 
     /**
      * @param args the command line arguments
@@ -385,7 +403,7 @@ public class Interfaz extends javax.swing.JFrame {
                 new Interfaz().setVisible(true);
             }
         });
-        
+
         Servidor ser = new Servidor();
         ser.run();
     }
@@ -416,7 +434,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    public static javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
     // End of variables declaration//GEN-END:variables

@@ -1,9 +1,0 @@
-diff a/[OLC1]Proyecto_Servidor/src/Analisis/Parser.cup b/[OLC1]Proyecto_Servidor/src/Analisis/Parser.cup	(rejected hunks)
-@@ -12,6 +12,7 @@
-     public ArrayList erroresS1 = new ArrayList();
-     public ArrayList al = new ArrayList();
-     public ArrayList erroresS = new ArrayList();
-+    public ArrayList erroresS1 = new ArrayList();
-     
-     public int score = 0;
-     public String clases = " ";

@@ -69,7 +69,7 @@ terminal String htmlA,htmlC,headA,headC,bodyA,bodyC,h1A,h1C,h2A,h2C,h3A,h3C,h4A,
                 punto,incre,decre,masIgual,menosIgual,mulIgual,dobleDolar,
                 and,or,not,resVar,resMet,resClases,resNom,resCant;
 
-terminal String entero,decimal,cadena,bool,iden,caracter,comia;
+terminal String entero,decimal,cadena,bool,iden,/*texto,*/caracter,comia;
 
 /*
 * Este terminal tiene un valor string. Recuerda que le dábamos el valor
@@ -84,13 +84,13 @@ terminal String entero,decimal,cadena,bool,iden,caracter,comia;
 non terminal INICIO,CUERPOHTML,CUERPOBODY,EXP,VALOR,EHA,ATRIBUTOS,ETRA,ETDHA,ARIT,
              EP,CUERPOP,EDIV,CUERPODIV,COLOR,ALINEACION,FUENTE,CPREPORT,CUERPOCPR,
              ACCESOVARIABLE,DECLARACION,FUNCPRINT,CONTPRINT,TIPO,OPREL,OPLOG,OPASIG,
-             CUERPO;
+             CUERPO,PYC;
 
 
 /* Precedencia */
 precedence left mas, menos;
 precedence left mul, div, modulo;
-precedence left entero, decimal, cadena, bool, iden, caracter;
+precedence left entero, decimal, cadena, bool, iden, /*texto,*/ caracter;
 precedence left parA, parC;
 precedence left htmlC, headA, dobleDolar, bodyA, bodyC;
 
@@ -140,6 +140,7 @@ VALOR::=entero:val {:RESULT=val;:}
         |cadena:val {:RESULT=val;:}
         |bool:val {:RESULT=val;:}
         |iden:val {:RESULT=val;:}
+  //      |texto:val {:RESULT=val;:}
         |caracter:val {:RESULT=val;:};
 
 EHA::=h1A ATRIBUTOS mayorq CUERPO h1C
@@ -224,11 +225,12 @@ FUENTE::=afb
         |tcm
         |ver;
 
-CPREPORT::=dobleDolar CUERPOCPR dobleDolar {:parser.al.add("Compilacion exitosa\n");:};
+CPREPORT::=dobleDolar CUERPOCPR PYC dobleDolar {:parser.al.add("Compilacion exitosa\n");:};
 
 CUERPOCPR::=ACCESOVARIABLE CUERPOCPR
            |DECLARACION CUERPOCPR
            |FUNCPRINT CUERPOCPR
+           |EXP CUERPOCPR
            |;
 
 FUNCPRINT::=resPrint parA CONTPRINT parC puntoYcoma;
@@ -282,4 +284,7 @@ OPLOG::=and ARIT
        |not ARIT
        |;
       
-ARIT::=parA EXP OPREL parC OPLOG;     
+ARIT::=parA EXP OPREL parC OPLOG;  
+
+PYC::=puntoYcoma
+     |;

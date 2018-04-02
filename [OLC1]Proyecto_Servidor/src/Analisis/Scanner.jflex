@@ -97,6 +97,9 @@ bool=("verdadero"|"falso"|"1"|"0")
 <YYINITIAL> "}"              {return new Symbol(sym.parC,yycolumn,yyline,yytext());}
 <YYINITIAL> "."              {return new Symbol(sym.punto,yycolumn,yyline,yytext());}
 
+<YYINITIAL> "++"              {return new Symbol(sym.incre,yycolumn,yyline,yytext());}     
+<YYINITIAL> "--"              {return new Symbol(sym.decre,yycolumn,yyline,yytext());}     
+
 <YYINITIAL> "&&"            {return new Symbol(sym.and,yycolumn,yyline,yytext());}
 <YYINITIAL> "||"             {return new Symbol(sym.or,yycolumn,yyline,yytext());}
 <YYINITIAL> "!"            {return new Symbol(sym.not,yycolumn,yyline,yytext());}

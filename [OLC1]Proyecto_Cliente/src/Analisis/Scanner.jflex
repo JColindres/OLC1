@@ -23,6 +23,7 @@ decimal =[0-9]+ "."? [0-9]*
 cadena =[\"] [^\"\n]* [\"\n]
 letra =[a-zA-ZÑñ]+
 iden ={letra}({letra}|{entero}|"_"|" ")*({letra}|{entero})*
+//texto ={letra}({letra}|{entero}|"."|" ")*
 caracter="'"[^]"'"
 bool=("verdadero"|"falso"|"1"|"0")
 comilla =[\"]
@@ -184,6 +185,7 @@ comilla =[\"]
 <YYINITIAL> {cadena}          {return new Symbol(sym.cadena,yycolumn,yyline,yytext());}
 <YYINITIAL> {bool}            {return new Symbol(sym.bool,yycolumn,yyline,yytext());}
 <YYINITIAL> {iden}            {return new Symbol(sym.iden,yycolumn,yyline,yytext());}
+//<YYINITIAL> {texto}           {return new Symbol(sym.texto,yycolumn,yyline,yytext());}
 <YYINITIAL> {caracter}        {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 <YYINITIAL> {comilla}         {return new Symbol(sym.comia,yycolumn,yyline,yytext());}
 
