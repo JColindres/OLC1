@@ -18,107 +18,106 @@ import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-//import compi1._proyecto1.ejempo;
 
 /**
  *
- * @author Toshiba
+ * @author piplo10
  */
 public class Servidor extends Thread {
 
-    public static ArrayList nombres = new ArrayList<String>();
+    public static ArrayList nomnom = new ArrayList<String>();
 
     Interfaz inter = new Interfaz();
 
     public void run() {
 
-        ServerSocket server;
-        Socket connection;
+        ServerSocket ss;
+        Socket concon;
 
-        BufferedInputStream bis;
-        BufferedOutputStream bos;
-        byte[] receivedData;
-        int in;
-        String file, mensajeRecibido, mensaje2;
+        BufferedInputStream inp;
+        BufferedOutputStream out;
+        byte[] RD;
+        int iiii;
+        String archivo, recepcion, msg;
 
         try {
-            server = new ServerSocket(5000);
+            ss = new ServerSocket(5000);
             while (true) {
-                connection = server.accept();
-                //inter.jTextArea2.append("se ha conectado el cliente\n");
-                receivedData = new byte[1024];
+                concon = ss.accept();
+                System.out.println("Cliente conectado\n");
+                RD = new byte[1024];
 
-                bis = new BufferedInputStream(connection.getInputStream());
-                DataInputStream dis = new DataInputStream(connection.getInputStream());
+                inp = new BufferedInputStream(concon.getInputStream());
+                DataInputStream dataStream = new DataInputStream(concon.getInputStream());
 
-                mensaje2 = dis.readUTF();
+                msg = dataStream.readUTF();
 
-                if (mensaje2.equals("archivo")) {
-                    mensajeRecibido = dis.readUTF();
+                if (msg.equals("archivo")) {
+                    recepcion = dataStream.readUTF();
 
-                    file = dis.readUTF();
+                    archivo = dataStream.readUTF();
 
-                    file = file.substring(file.indexOf('\\') + 1, file.length());
+                    archivo = archivo.substring(archivo.indexOf('\\') + 1, archivo.length());
 
-                    if (mensajeRecibido.equals("1")) {
-                        file = "Proyecto1\\" + file;
-                    } else if (mensajeRecibido.equals("2")) {
-                        file = "Proyecto2\\" + file;
+                    if (recepcion.equals("1")) {
+                        archivo = "Proyecto1\\" + archivo;
+                    } else if (recepcion.equals("2")) {
+                        archivo = "Proyecto2\\" + archivo;
                     }
-                    nombres.add(file);
+                    nomnom.add(archivo);
 
-                    bos = new BufferedOutputStream(new FileOutputStream(file));
-                    while ((in = bis.read(receivedData)) != -1) {
-                        bos.write(receivedData, 0, in);
+                    out = new BufferedOutputStream(new FileOutputStream(archivo));
+                    while ((iiii = inp.read(RD)) != -1) {
+                        out.write(RD, 0, iiii);
                     }
-                    bos.close();
-                    dis.close();
-                    //inter.jTextArea2.append("se ha recivido un archivo\n");
+                    out.close();
+                    dataStream.close();
                 } else {
 
-                    String path = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\Proyecto1";
-                    String files, cadenatotal = "";
-                    File folder = new File(path);
-                    File[] listOfFiles = folder.listFiles();
+                    String pathArchivo1 = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\Proyecto1";
+                    String arc, chain = "";
+                    File sobre = new File(pathArchivo1);
+                    File[] archivos = sobre.listFiles();
 
-                    for (int i = 0; i < listOfFiles.length; i++) {
-                        if (listOfFiles[i].isFile()) {
-                            files = listOfFiles[i].getName();
-                            if (files.endsWith(".java") || files.endsWith(".JAVA")) {
-                                cadenatotal = muestraContenido(path + "\\" + files);
-                                String datos = cadenatotal;
+                    for (int i = 0; i < archivos.length; i++) {
+                        if (archivos[i].isFile()) {
+                            arc = archivos[i].getName();
+                            if (arc.endsWith(".java") || arc.endsWith(".JAVA")) {
+                                chain = muestraContenido(pathArchivo1 + "\\" + arc);
+                                String datos = chain;
                                 Lexico lex = new Lexico(new BufferedReader(new StringReader(datos)));
                                 Sintactico sin = new Sintactico(lex);
                                 inter.errores(datos);
-                                
+
                                 try {
                                     sin.parse();
                                 } catch (Exception e) {
                                 }
-                                System.out.println("finalizo");
+                                System.out.println("Archivo Leido");
                             }
                         }
                     }
 
-                    String path2 = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\Proyecto2";
-                    String files2, cadenatotal2 = "";
-                    File folder2 = new File(path2);
-                    File[] listOfFiles2 = folder2.listFiles();
+                    String pathArchivo2 = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\Proyecto2";
+                    String archi, ghostrider = "";
+                    File uppper = new File(pathArchivo2);
+                    File[] masArchivos = uppper.listFiles();
 
-                    for (int i = 0; i < listOfFiles2.length; i++) {
-                        if (listOfFiles2[i].isFile()) {
-                            files2 = listOfFiles2[i].getName();
-                            if (files2.endsWith(".java") || files2.endsWith(".JAVA")) {
-                                cadenatotal2 = muestraContenido(path2 + "\\" + files2);
-                                String datos2 = cadenatotal2;
-                                Lexico lex = new Lexico(new BufferedReader(new StringReader(datos2)));
+                    for (int i = 0; i < masArchivos.length; i++) {
+                        if (masArchivos[i].isFile()) {
+                            archi = masArchivos[i].getName();
+                            if (archi.endsWith(".java") || archi.endsWith(".JAVA")) {
+                                ghostrider = muestraContenido(pathArchivo2 + "\\" + archi);
+                                String datos = ghostrider;
+                                Lexico lex = new Lexico(new BufferedReader(new StringReader(datos)));
                                 Sintactico sin = new Sintactico(lex);
-                                inter.errores(datos2);
-                                
+                                inter.errores(datos);
+
                                 try {
                                     sin.parse();
                                 } catch (Exception e) {
                                 }
+                                System.out.println("Archivo Leido");
                             }
                         }
                     }
@@ -132,18 +131,19 @@ public class Servidor extends Thread {
 
     }
 
-    public String muestraContenido(String archivo) {
-        String cadena, cadenatotal = " ";
+    public String muestraContenido(String archive) {
+        String chain = " ";
+        String finalChain = " ";
         try {
-            FileReader f = new FileReader(archivo);
-            BufferedReader b = new BufferedReader(f);
-            while ((cadena = b.readLine()) != null) {
-                cadenatotal = cadenatotal + cadena + "\n";
+            FileReader fr = new FileReader(archive);
+            BufferedReader br = new BufferedReader(fr);
+            while ((chain = br.readLine()) != null) {
+                finalChain = finalChain + chain + "\n";
             }
         } catch (Exception e) {
             System.err.println(e);
         }
-        return (cadenatotal);
+        return (finalChain);
     }
 
 }
