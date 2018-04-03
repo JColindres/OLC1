@@ -45,7 +45,7 @@ public class Servidor extends Thread {
             server = new ServerSocket(5000);
             while (true) {
                 connection = server.accept();
-                inter.jTextArea2.append("se ha conectado el cliente\n");
+                //inter.jTextArea2.append("se ha conectado el cliente\n");
                 receivedData = new byte[1024];
 
                 bis = new BufferedInputStream(connection.getInputStream());

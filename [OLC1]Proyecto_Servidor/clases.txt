@@ -1,1 +1,1 @@
- Mascota,
+ Persona,

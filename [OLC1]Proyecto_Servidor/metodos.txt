@@ -1,1 +1,1 @@
- Mascota,getInfo,
+ Estudiante,crearPerro,getFullName,getName,getApellido,getEdad,getCui,esMayorDeEdad,enviarSaludo,

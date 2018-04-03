@@ -4,7 +4,7 @@ public class Mascota{
     public String tipo;
     public String edad;
 
-    public String Mascota(String nombreAux,String razaAux,String tipoAux,int edadAux){
+    public Mascota(String nombreAux,String razaAux,String tipoAux,int edadAux){
         nombre=nombreAux;
         raza=razaAux;
         tipoAux=tipoAux;
@@ -12,7 +12,7 @@ public class Mascota{
     }
 
     public String getInfo(){
-        String info="nombre:";
+        String info="nombre:"+nombre+" raza:"+raza+" tipo:"+tipo+" edad:"+edad;
         return info;
     }
 }

@@ -11,14 +11,16 @@ import java_cup.runtime.*;
 parser code
 {:
 
-    public ArrayList al = new ArrayList();
+    public static ArrayList al = new ArrayList();
     public ArrayList erroresS = new ArrayList();
     public ArrayList erroresS1 = new ArrayList();
+    public String SCORE = " ";
     public String CLASES = " ";
     public String VARIABLES = " ";
     public String METODOS = " ";
+    public static String COMENTARIOS = " ";
     
-    public int score = 0;
+    public double score = 0;
     public String clases = " ";
     public String variables = " ";
     public String metodos = " ";
@@ -172,7 +174,33 @@ CLASS::= ACCESO resClass iden:val parA {:parser.al.add("inicio de la clase\n");
                                         parser.json2 = '"'+"Clases"+'"'+":[" + parser.clases + "],";
                                         parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
                                         parser.CLASES += val + ",";:} 
-         COD parC {:parser.al.add("fin de la clase\n");
+         COD parC {:parser.al.add("fin de la clase\n");String nomb = parser.COMENTARIOS;
+                        if(parser.comentarios==" "){
+                            parser.comentarios += "{"+'"'+"texto"+'"'+":"+'"'+nomb+'"'+"}";
+                            parser.json5 = '"'+"Comentarios"+'"'+":[" + parser.comentarios + "]";
+                            parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                            parser.COMENTARIOS += nomb + ",";
+                        }else{
+                            parser.comentarios += ",{"+'"'+"texto"+'"'+":"+'"'+nomb+'"'+"}";
+                            parser.json5 = '"'+"Comentarios"+'"'+":[" + parser.comentarios + "]";
+                            parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                            parser.COMENTARIOS += nomb + ",";
+                        }
+                    String[] partCo = parser.COMENTARIOS.split(",");
+                    String[] partCl = parser.CLASES.split(",");
+                    String[] partMe = parser.METODOS.split(",");
+                    String[] partVa = parser.VARIABLES.split(",");
+                    parser.score = (double) (((partCo.length+1)*0.25)/((partCo.length+1)*2) + ((partVa.length+1)*0.25)/((partCo.length+1)*2) + ((partMe.length+1)*0.25)/((partCo.length+1)*2) + ((partCl.length+1)*0.25)/((partCo.length+1)*2));
+                    parser.json1 = '"'+"Score"+'"'+":[" + parser.score + "]";
+                    parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                    parser.SCORE += parser.score + ",";
+                    File fileName0 = new File("score.txt");
+                    try {
+                        BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName0));
+                        outFile.write(parser.SCORE);
+                        outFile.close();
+                    } catch (IOException ex) {
+                    }
                     File fileName = new File("clases.txt");
                     try {
                         BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName));
@@ -184,6 +212,20 @@ CLASS::= ACCESO resClass iden:val parA {:parser.al.add("inicio de la clase\n");
                     try {
                         BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName2));
                         outFile.write(parser.METODOS);
+                        outFile.close();
+                    } catch (IOException ex) {
+                    }
+                    File fileName3 = new File("variables.txt");
+                    try {
+                        BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName3));
+                        outFile.write(parser.VARIABLES);
+                        outFile.close();
+                    } catch (IOException ex) {
+                    }
+                    File fileName4 = new File("comentarios.txt");
+                    try {
+                        BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName4));
+                        outFile.write(parser.COMENTARIOS);
                         outFile.close();
                     } catch (IOException ex) {
                     }:}
@@ -234,9 +276,31 @@ MET::= ACCESO TIPO:tipo iden:nomb parentesisA PARAM:num parentesisC parA {:parse
 
 MAIN::=resPublic resStatic resVoid iden parentesisA resString iden corA corC parentesisC parA {:parser.al.add("inicio del metodo main\n");:} COD2 parC {:parser.al.add("fin del metodo main\n");:};
 
-DECLARACION::= ACCESO TIPO LISTAID puntoYcoma {:parser.al.add("declaracion de variables\n");:};
+DECLARACION::= ACCESO TIPO:tipo LISTAID:nomb puntoYcoma {:parser.al.add("declaracion de variables\n");
+                    if(parser.variables==" "){
+                        parser.variables += "{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    }else{
+                        parser.variables += ",{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    };:};
 
-ASIGNACION::= ACCESO TIPO LISTAID IGUALACION EXP puntoYcoma {:parser.al.add("asignacion a variables no declaradas\n");:}
+ASIGNACION::= ACCESO TIPO:tipo LISTAID:nomb IGUALACION EXP puntoYcoma {:parser.al.add("asignacion a variables no declaradas\n");
+                    if(parser.variables==" "){
+                        parser.variables += "{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    }else{
+                        parser.variables += ",{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    };:}
             | LISTAID IGUALACION EXP puntoYcoma {:parser.al.add("asignacion a variables previamente declaradas\n");:};
 
 LISTAID::=iden:id2 {:RESULT=id2;:}
@@ -260,8 +324,30 @@ ACCESO::=resPublic:val
 
 PARAM::=EXP:val {:RESULT=val;:}
        |EXP:val1 coma PARAM:val2 {:RESULT=val1+","+val2;:}
-       |TIPO EXP:val {:RESULT=val;:} 
-       |TIPO EXP coma PARAM
+       |TIPO:tipo EXP:nomb {:RESULT=nomb;
+                    if(parser.variables==" "){
+                        parser.variables += "{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    }else{
+                        parser.variables += ",{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    };:} 
+       |TIPO:tipo EXP:nomb coma PARAM {:RESULT=nomb;
+                    if(parser.variables==" "){
+                        parser.variables += "{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    }else{
+                        parser.variables += ",{"+'"'+"Nombre"+'"'+":"+'"'+nomb+'"'+","+'"'+"Tipo"+'"'+":"+'"'+tipo+'"'+"}";
+                        parser.json3 = '"'+"Variables"+'"'+":[" + parser.variables + "],";
+                        parser.json = "{" + parser.json1 + parser.json2 + parser.json3 + parser.json4 + parser.json5 + "}";
+                        parser.VARIABLES += nomb + ",";
+                    };:} 
        |VALOR mas PARAM
        |VALOR menos PARAM
        |VALOR mul PARAM

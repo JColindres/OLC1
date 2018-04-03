@@ -128,28 +128,9 @@ public class Interfaz extends javax.swing.JFrame {
 
         ColumnaJava.setText("0");
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Json");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("score");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("0");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("clases");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("clase1");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("metodos");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("metodo1");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("variables");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("variable1");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("comentarios");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("comentario");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.setRootVisible(false);
         jScrollPane5.setViewportView(jTree1);
 
         jMenu1.setText("Archivo");
@@ -445,13 +426,13 @@ public class Interfaz extends javax.swing.JFrame {
         final JFileChooser SaveAs = new JFileChooser();
         SaveAs.setApproveButtonText("Guardar");
 
-        File fileName = new File(SaveAs.getSelectedFile() + ".cp");
+        File fileName = new File(SaveAs.getSelectedFile() + ".html");
         try {
             if (fileName == null) {
                 return;
             }
             BufferedWriter outFile = new BufferedWriter(new FileWriter(fileName));
-            outFile.write(jTextArea2.getText());
+            outFile.write(jTextArea1.getText());
 
             outFile.close();
         } catch (IOException ex) {
@@ -526,7 +507,48 @@ public class Interfaz extends javax.swing.JFrame {
     DefaultMutableTreeNode selectednode;
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
 
-        ArrayList ccc = new ArrayList();
+        //DefaultMutableTreeNode root = new DefaultMutableTreeNode("Json");
+        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        DefaultMutableTreeNode json = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Json"));
+        DefaultMutableTreeNode SCORE = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Score"));
+        DefaultMutableTreeNode CLASES = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Clases"));
+        DefaultMutableTreeNode METODOS = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Metodos"));
+        DefaultMutableTreeNode VARIABLES = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Variables"));
+        DefaultMutableTreeNode COMENTARIOS = new DefaultMutableTreeNode(new DefaultMutableTreeNode("Comentarios"));
+        root.add(json);
+        json.add(SCORE);
+        json.add(CLASES);
+        json.add(METODOS);
+        json.add(VARIABLES);
+        json.add(COMENTARIOS);
+        model.reload();
+        
+        StringBuilder sb0 = new StringBuilder();
+        String pathScore = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\score.txt";
+        File c0 = new File(pathScore);
+        try {
+            Scanner archivoScore = new Scanner(c0);
+            while (archivoScore.hasNext()) {
+
+                sb0.append(archivoScore.nextLine());
+                sb0.append("\n");
+            }
+            archivoScore.close();
+            String score = sb0.toString();
+            String[] partsScore = score.split(",");
+            for (int x = 0; x < partsScore.length-1; x++) {
+                if(!partsScore[x].equals("")||!partsScore[x].equals(" ")){ 
+                    
+                    SCORE.add(new DefaultMutableTreeNode(partsScore[x]));
+                    model.reload();                
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         StringBuilder sb = new StringBuilder();
         String pathClases = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\clases.txt";
         File c = new File(pathClases);
@@ -540,18 +562,93 @@ public class Interfaz extends javax.swing.JFrame {
             archivoClase.close();
             String clases = sb.toString();
             String[] partsClases = clases.split(",");
-            for (int x = 1; x < partsClases.length; x++) {
-                selectednode = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
-                if (selectednode != null) {
-                    selectednode.insert(new DefaultMutableTreeNode(partsClases[x]), selectednode.getIndex(selectednode.getLastChild()));
-                    System.out.println(sb);
-                    System.out.println(partsClases[x]);
+            for (int x = 0; x < partsClases.length-1; x++) {
+                if(!partsClases[x].equals("")||!partsClases[x].equals(" ")){ 
+                    
+                    CLASES.add(new DefaultMutableTreeNode(partsClases[x]));
+                    model.reload();                
                 }
             }
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        StringBuilder sb2 = new StringBuilder();
+        String pathMetodos = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\metodos.txt";
+        File c2 = new File(pathMetodos);
+        try {
+            Scanner archivoMetodos = new Scanner(c2);
+            while (archivoMetodos.hasNext()) {
+
+                sb2.append(archivoMetodos.nextLine());
+                sb2.append("\n");
+            }
+            archivoMetodos.close();
+            String metodos = sb2.toString();
+            String[] partsMetodos = metodos.split(",");
+            for (int x = 0; x < partsMetodos.length-1; x++) {
+                if(!partsMetodos[x].equals("")||!partsMetodos[x].equals(" ")){ 
+                    
+                    METODOS.add(new DefaultMutableTreeNode(partsMetodos[x]));
+                    model.reload();                
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        StringBuilder sb3 = new StringBuilder();
+        String pathVariables = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\variables.txt";
+        File c3 = new File(pathVariables);
+        try {
+            Scanner archivoVariables = new Scanner(c3);
+            while (archivoVariables.hasNext()) {
+
+                sb3.append(archivoVariables.nextLine());
+                sb3.append("\n");
+            }
+            archivoVariables.close();
+            String variables = sb3.toString();
+            String[] partsVariables = variables.split(",");
+            for (int x = 0; x < partsVariables.length-1; x++) {
+                if(!partsVariables[x].equals("")||!partsVariables[x].equals(" ")){ 
+                    
+                    VARIABLES.add(new DefaultMutableTreeNode(partsVariables[x]));
+                    model.reload();                
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        StringBuilder sb4 = new StringBuilder();
+        String pathComentarios = "C:\\Users\\pablo\\Documents\\1er-Sem-2018\\OLC1\\[OLC1]Proyecto_Servidor\\comentarios.txt";
+        File c4 = new File(pathComentarios);
+        try {
+            Scanner archivoComentarios = new Scanner(c4);
+            while (archivoComentarios.hasNext()) {
+
+                sb4.append(archivoComentarios.nextLine());
+                sb4.append("\n");
+            }
+            archivoComentarios.close();
+            String comentarios = sb4.toString();
+            String[] partsComentarios = comentarios.split(",");
+            for (int x = 0; x < partsComentarios.length-1; x++) {
+                if(!partsComentarios[x].equals("")||!partsComentarios[x].equals(" ")){ 
+                    
+                    COMENTARIOS.add(new DefaultMutableTreeNode(partsComentarios[x]));
+                    model.reload();                
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

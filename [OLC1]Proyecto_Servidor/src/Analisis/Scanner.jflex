@@ -41,6 +41,7 @@ bool=("verdadero"|"falso"|"1"|"0")
 
     public ArrayList erroresL = new ArrayList();
     Sintactico sin = new Sintactico();
+    public String nomb = "no sirve";
 
 %}
 
@@ -111,14 +112,16 @@ bool=("verdadero"|"falso"|"1"|"0")
 <YYINITIAL> {iden}           {return new Symbol(sym.iden,yycolumn,yyline,yytext());}
 <YYINITIAL> {caracter}       {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 
+ 
+
 /* COMENTARIOS */
-<YYINITIAL> "/*"    {yybegin(COMENTARIO1);sin.al.add("comentario multilinea");}
+<YYINITIAL> "/*"    {yybegin(COMENTARIO1);sin.al.add("comentario multilinea ");System.out.println("comentario multilinea ");}
 <COMENTARIO1> [\n] {}
-<COMENTARIO1> [^"*/"] {}
+<COMENTARIO1> [^"*/"] {Sintactico alv = new Sintactico();alv.COMENTARIOS+=""+yytext();}
 <COMENTARIO1> "*/" {yybegin(YYINITIAL);}
 
-<YYINITIAL> "//" {yybegin(COMENTARIO2);sin.al.add("comentario de una linea");}
-<COMENTARIO2> [^\n] {}
+<YYINITIAL> "//" {yybegin(COMENTARIO2);sin.al.add("comentario de una linea ");System.out.println("comentario multilinea ");}
+<COMENTARIO2> [^\n] {Sintactico alv = new Sintactico();alv.COMENTARIOS+=""+yytext();}
 <COMENTARIO2> [\n] {yybegin(YYINITIAL);}
 
 /* BLANCOS */
