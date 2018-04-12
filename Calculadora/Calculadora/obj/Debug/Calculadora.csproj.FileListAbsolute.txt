@@ -1,0 +1,40 @@
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.exe.config
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.exe
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.pdb
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.csprojResolveAssemblyReference.cache
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.Form1.resources
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.Properties.Resources.resources
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.csproj.GenerateResource.Cache
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.exe
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.pdb
+c:\users\francisco\documents\visual studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Irony.dll
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\bin\Debug\Calculadora.exe.config
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.exe
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.pdb
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\bin\Debug\Calculadora.exe
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\bin\Debug\Calculadora.pdb
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\bin\Debug\Irony.dll
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.csprojResolveAssemblyReference.cache
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.Form1.resources
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.Properties.Resources.resources
+C:\Users\FRANCISCOALEJANDRO\Documents\COMPILADORES 2\Segundo Semestre 2014\Blog\Calculadora\Calculadora\obj\Debug\Calculadora.csproj.GenerateResource.Cache
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.exe.config
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.exe
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.pdb
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.exe
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Calculadora.pdb
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\bin\Debug\Irony.dll
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.csprojResolveAssemblyReference.cache
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.Form1.resources
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.Properties.Resources.resources
+C:\Users\Jose\Documents\Visual Studio 2013\Projects\Calculadora\Calculadora\obj\Debug\Calculadora.csproj.GenerateResource.Cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\bin\Debug\Calculadora.exe.config
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\bin\Debug\Calculadora.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\bin\Debug\Calculadora.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\bin\Debug\Irony.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.csprojResolveAssemblyReference.cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.Form1.resources
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.Properties.Resources.resources
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Calculadora\Calculadora\obj\Debug\Calculadora.csproj.GenerateResource.Cache

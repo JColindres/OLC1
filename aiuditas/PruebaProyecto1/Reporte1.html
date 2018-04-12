@@ -1,0 +1,59 @@
+<html>
+    $$ 
+    String titulo="Reporte 1";
+    Double sscore=RESULT.score;
+    int valor=0;
+    $$
+    <head>
+        <title>$$Print(titulo);$$</title>
+    </head>
+    <body>
+        <h1 align="centrado">Reporte de copas No 1</h1>
+        <hr>
+        <br>
+        <div>
+            <p textcolor="azul">
+                El score de copia es $$sscore$$, este resultado fue posible obtenerlo
+                gracias al analizador de copias
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div>
+            <h1>$$valor++;$$</h1>
+            <br>
+            <h3>Cantidad de copias de clases encontradas:</h3>
+            <br>
+            <h4 textcolor="rojo">$$Print(RESULT.clases.cantidad);$$</h4>
+            <br>
+            <h4>$$Print(RESULT.clases);$$</h4>
+            <hr>
+            <br>
+            <h1>$$valor=valor+1;$$</h1>
+            <br>
+            <h3>Cantidad de copias de metodos encontradas:</h3>
+            <br>
+            <h4 textcolor="rojo">$$Print(RESULT.metodos.cantidad);$$</h4>
+            <br>
+            <h4>$$Print(RESULT.metodos);$$</h4>
+            <hr>
+            <br>
+            <h1>$$valor=10*9+valor*2-93;$$</h1>
+            <br>
+            <h3>Cantidad de copias de variables encontradas:</h3>
+            <br>
+            <h4 textcolor="amarillo">$$Print(RESULT.variables.cantidad);$$</h4>
+            <br>
+            <h4 textcolor="amarillo">$$Print(RESULT.variables);$$</h4>
+        </div>
+        <br>
+        <div>
+            <p>
+                El analizador de copias ha encontrado que la clase $$Print(RESULT.clases[0].nombre);$$ fue detectada como copia,
+                al menos su nombre
+            </p>
+        </div>
+
+    </body>
+</html>

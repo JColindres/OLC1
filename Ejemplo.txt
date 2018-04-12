@@ -1,0 +1,26 @@
+digraph lista{ rankdir=TB;node [shape = box, style=rounded]; nodo2637164[label="S ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo41014879[label="E ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo3888474[label="DECLA ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo25209742[label="var (Keyword) ", fillcolor="red", style ="filled", shape="circle"]; 
+"nodo3888474"-> "nodo25209742" 
+nodo26966483[label="hola (id) ", fillcolor="red", style ="filled", shape="circle"]; 
+"nodo3888474"-> "nodo26966483" 
+nodo31884011[label="= (Key symbol) ", fillcolor="red", style ="filled", shape="circle"]; 
+"nodo3888474"-> "nodo31884011" 
+nodo32176063[label="T ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo44150175[label="F ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo65326725[label="G ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo61150033[label="H ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo24123405[label="I ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo49535530[label="J ", fillcolor="red", style ="filled", shape="circle"]; 
+nodo17690816[label="5 (entero) ", fillcolor="red", style ="filled", shape="circle"]; 
+"nodo49535530"-> "nodo17690816" 
+"nodo24123405"-> "nodo49535530" 
+"nodo61150033"-> "nodo24123405" 
+"nodo65326725"-> "nodo61150033" 
+"nodo44150175"-> "nodo65326725" 
+"nodo32176063"-> "nodo44150175" 
+"nodo3888474"-> "nodo32176063" 
+"nodo41014879"-> "nodo3888474" 
+"nodo2637164"-> "nodo41014879" 
+}

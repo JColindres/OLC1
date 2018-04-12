@@ -1,0 +1,71 @@
+primero 
+cd C:\Users\Toshiba\Documents\NetBeansProjects\[compi1]_proyecto1\src\compi1\_proyecto1
+
+Jflex
+java -jar C:\Users\Toshiba\Desktop\Garcia\jflex-1.6.1\lib\jflex-1.6.1.jar A_Lexico.jflex
+
+sintactico
+java -jar C:\Users\Toshiba\Desktop\Garcia\java-cup-11b.jar -parser sintactico -symbols simbolo A_Sintactico.cup
+
+import carlos ;
+
+public class carlo{
+ private boolean ide_1=false;
+public int ide_2;
+protected String ide_3,ide_4,ide_5;
+
+public int funcion_1 (){}
+
+private boolean funcion_2(int ide1, String ide2, Object ide3){} 
+//primer comentario 
+/*es un
+comentario
+multilinea
+*/
+if(!ide==false){ide1=ide2;}
+while(ide1<10){funcion3(12)}
+do{}while(funcion1()!=funcion2());
+for(int ide_count=2; ide_count<=10;ide_count=ide_count+2 ){}
+break;
+return;
+carlos();
+funcion1(2);
+funcion2("esto es una 1234 cadena de texto");
+funcion3(4,"cadena de texto mierdo",5);
+funcion4(4+5+6+7+8,"hola "+" jaime",ide1+ide3);
+funcion5(funcion2()*funcion3());
+if(ide1==12 && ide2 != ide3){}
+if(ide3<ide4 || ide5==true){}
+if("hola puto"==ide3 ){}
+if(ide2<=funcion2(ide4)){}
+if(ide2*ide4==funcion2()-funcion3()){}
+switch(ide_6){
+case 1:
+if(variable=="null"){}
+break;
+case 2:
+break;
+case 3:
+break;
+case 4:
+break;
+}
+switch(yaul){
+case "tum":
+break;
+case ide_9:
+break;
+default:
+if(true==true){ }
+}
+ide1=(1+2)/3*4;
+clase1 objeto= new clase1("tommy");
+//comentario simple
+}
+/*ttrue:z {:im(" "+z);:} OPLOGICO tid:x {:im(" "+x);:} OPLOGICODOS
+                       |tfalse:z {:im(" "+z);:} OPLOGICO tid:x {:im(" "+x);:} OPLOGICODOS
+                       |tdigito:z {:im(" "+z);:} OPLOGICO tid:x {:im(" "+x);:} OPLOGICODOS
+                       |tid:z {:im(" "+z);:} OPLOGICO P
+                       |PUF OPLOGICO
+                       |tcadena:z {:im(" "+z);:} OPLOGICO tid:v {:im(" "+v);:} OPLOGICODOS
+                       |/*epsilon*/;*/

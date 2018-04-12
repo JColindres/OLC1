@@ -1,0 +1,7 @@
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\bin\Debug\Irony.Interpreter.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\bin\Debug\Irony.Interpreter.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\bin\Debug\Irony.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\bin\Debug\Irony.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\obj\Debug\015.Irony.Interpreter.2012.csprojResolveAssemblyReference.cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\obj\Debug\Irony.Interpreter.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\irony\Irony.Interpreter\obj\Debug\Irony.Interpreter.pdb

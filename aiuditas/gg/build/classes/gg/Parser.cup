@@ -1,0 +1,340 @@
+package gg;
+
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
+parser code
+{:
+
+public String ggg(){
+return action_obj.salida;
+}
+
+public String ggg2(){
+return action_obj.b;
+}
+
+public String rrr(){
+return action_obj.error;
+}
+
+/**Metodo al que se llama automáticamente ante algún error sintactico.*/
+public void syntax_error(Symbol s){
+    System.err.println("Error en la Línea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador "
+    +s.value + " no reconocido." );
+    }
+
+/**Metodo al que se llama en el momento en que ya no es posible una recuperación de
+errores.*/
+public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+    System.err.println("Error en la Línea " + (s.right+1)+ "Columna "+(s.left+1)+". Identificador " +
+    s.value + " no reconocido.");    
+    }
+
+/*public Nodo getRaiz(){
+    return action_obj.raiz;
+}*/
+
+public ArrayList imp(){
+    CUP$Sintactico$actions csa = new CUP$Sintactico$actions(this);
+    ArrayList txt = new ArrayList(csa.al);
+    return txt;
+}
+:}
+
+action code {:
+    //Nodo raiz=null;
+    ArrayList al = new ArrayList();
+    gg.server Interfaz = new gg.server();
+
+public String salida = "{ \n \n";
+public String error ="";
+public double a=0;
+public int p=0;
+public String b="";
+public String c="";
+public String d="";
+public int lectura=0;
+ArrayList<String> relax = new ArrayList<String>();
+ArrayList<String> relax2 = new ArrayList<String>();
+ArrayList<String> relax3 = new ArrayList<String>();
+Iterator<String> rela=relax.iterator();
+int ja=1;
+int jaa=1;
+int jaaa=1;
+public int y=0;
+String copa, copa2;
+double pc,pc1,pv,pv1,pm,pm1 =0;
+double tc,tv,tm=0;
+:}
+
+/*terminales reservados*/
+terminal String dim,as,resInteger,resString,module,end,resPublic,resPrivate,
+resStatic,resBoolean,resChar,resDouble,resLong,cwl,sub,resIf,resThen,resElse,resWhile,resFor,resTo,
+step,next,resDo,loop,select,resCase,exit,menorq,menorIgual,mayorq,mayorIgual,menorMayor,igual,puntoComa,
+coma,parentesisA,parentesisC,mas,menos,mul,div,mod,pot,andD,orR,not,iddd,num,potb,mas2,menos2,mul2,div2,
+unis,comi,byval,retu,main,resEndIf,elseif,Until,salto,endmodul,endsu,func,endfunc,rwl,
+igualigual,diferente,importt,clase,parentA,parentC,voide,neww,resProtected,resfinal,
+resbreak,resswitch,dosp,resdefault,masmas,menmen,resObject,noni,comina;
+
+terminal String inic,jclas,jvara,jmeto,jcome;
+
+terminal String htmll,fhtml,head,fhead,bodyy,fbody,h1,fh1,h2,fh2,h3,fh3,h4,fh4,h5,fh5,h6,fh6,
+title,ftitle,table,ftable,th,fth,td,ftd,tr,ftr,divh,fdivh,p,fp,br,fbr,hr,fhr,color,igualh,comih,
+menorqh,mayorqh,rojo,amarillo,azul,verde,gris,anaranjado,morado,textcolor,align,izquierda,
+derecha,centrado,font;
+
+terminal String reportt,prin,resul,puntor,puntoComar,comar,parentesisAr,parentesisCr,freportt,scoree,
+llamaA,llamaC;
+
+terminal String entero,decimal,cadena,bool,iden,caracter,palabra;
+
+/*
+* Este terminal tiene un valor string. Recuerda que le dábamos el valor
+* en el código del analizador léxico, al darle como parámetro un valor
+* string al objeto Symbolo.
+*/
+
+/*
+* Aquí están los no terminales
+*/
+non terminal INICIO,IMPORTTT,CLASE,VISIBILIDAD,VISIBILIDADCUERPOCLASE,CUERPOCLASE,
+CUERPOCLASEVISIBILIDAD,METODO,CONSTRUCTOR,TIPOCUERPOCLASE,
+CUERPOCLASESINTIPO,TIPO,FUNCION,CUERPODEASGSINTIPO,LISTAVARIABLES,PARAMETROS,
+CUERPOMETODO,TIPODEASG,SENTENCIAS,LLAMADA,OTROPARAMETRO,CUERPOFUNCION,
+DECLARACION,OTRAVARIABLE,ASIGNACION,EXPRESION,TIPOEXPRESION,INSTANCIA,VALOR,
+OPERACION,COMPARACION,SIGNOLOGICO,OTRACOMPARACION,SIGNOARITMETICO,
+OTRAOPERACION,IF,FOR,WHILE,DOWHILE,SWITCH,ELSE,COMPARACIONSENTENCIA,CUERPOIFWC,
+OTRACOMPARACIONSENTENCIA,UNIONCOMPARACION,CUERPOCONSTRUCTOR,BREAK,RETURN,
+INICIALFOR,INCREMENTO,CASES,OTROCASE,CASEDEFAULT,INCREMENTO2,ERROR,RESTOIMP,LISTAID,DECLARARATRI,EXP2,CIF,PARA,
+CFOR,EXP3,FIN;
+
+non terminal CUERPOH,CCHEAD,EXP,CCBODY,ATRIBUTOS,COLOR,LADO,TIPOH,CUERPORE,ASIGVAR,VALOR2,LISTAID2,LISTAID3,
+ASGN,TIPOHR,ASIGVAR2;
+
+non terminal REPO;
+
+/* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
+start with INICIO; // start with sirve para indicarle al parser con que produccion empezar
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+INICIO::=htmll{:System.out.println("inicio html");:} CUERPOH fhtml{:System.out.println("fin html");:}
+    |parentA REPO parentA
+    |IMPORTTT CLASE {:salida+=("Clases:[ {"+ b +"} ], \n \n"); tc=(pc1/(pc*0.25));:} {:salida+=("Variables:[ "+c+"], \n"); tv=(pv1/(pv*0.25));:} {:salida+=("Metodos:[ "+d+"], \n");tm=(pm1/(pm*0.25));:}{:a=tc+tv+tm;:} {:salida+=("\n score: [ "+ a +" ] }");:}{:relax.clear();//relax.get(0);:};
+
+IMPORTTT::= importt:imp iden:ids puntor RESTOIMP puntoComa IMPORTTT
+    |;
+
+
+RESTOIMP::=iden puntor RESTOIMP
+    |iden{:System.out.println("import id");:}
+    |mul{:System.out.println("import *");:}
+    |{:System.out.println("nada");:};
+
+CLASE::= VISIBILIDAD clase iden:ids parentA CUERPOCLASE  parentC {:pc++;:} {:relax.add(""+ids);:} {:copa=ids; for(int x=0;x<relax.size();x++){copa2=relax.get(x);System.out.println("entra a for "+x+" "+ copa+ " contenido "+copa2);if(copa.equals(copa2)){ if(ja==1){  ja=2; System.out.println("primera face");} else if(ja==2){b+=("Nombre:\""+ ids+"\", "); pc1++; System.out.println("---------------------"+relax.get(x)); }  }else{System.out.println("else primera face");}}:} {:ja=1;:} IMPORTTT {:y++;:} CLASE
+    |;
+
+VISIBILIDAD::= resPrivate
+    |resPublic
+    |resProtected
+    |resfinal
+    |;
+
+CUERPOCLASE::=resPublic resStatic voide main parentesisA resString llamaA llamaC iden parentesisC CUERPOMETODO parentC CUERPOCLASE
+    |VISIBILIDAD TIPO:tip iden:ids parentesisA PARAMETROS parentesisC {:pm++;:} {:relax3.add(""+ids+""+tip+""+p);:} {:copa=""+ids+""+tip+""+p; for(int m=0;m<relax3.size();m++){copa2=relax3.get(m);if(copa.equals(copa2)){ if(jaaa==1){  jaaa=2; } else if(jaaa==2){d+=("{Nombre:\""+ ids +"\", Tipo:\""+ tip +"\",Parametros:\""+ p +"\"} \n"); pm1++;}  }else{System.out.println("error en ");}}:} {:jaaa=1;:}           parentA CUERPOMETODO PARA parentC CUERPOCLASE
+    |VISIBILIDAD DECLARARATRI  puntoComa  CUERPOCLASE 
+//    |VISIBILIDAD iden parentesisA parentesisC parentA CUERPOMETODO parentC CUERPOCLASE
+    |;
+
+DECLARARATRI::=TIPO:tip iden:id {:pv++;:} {:relax2.add(""+id+""+tip);copa=""+id+""+tip;:} {:  for(int w=0;w<relax2.size();w++){copa2=relax2.get(w);System.out.println("entra a for decalracion "+w+" "+ copa+ " contenido "+copa2);if(copa.equals(copa2)){ if(jaa==1){  jaa=2; } else if(jaa==2){c+=("{Nombre:\""+ id +"\", Tipo:\""+ tip +"\"} \n"); pv1++;}  }else{System.out.println("error en ");}}:} {:jaa=1;:} ASIGNACION 
+    |TIPO:tip iden:ids coma ASIGNACION
+    |iden:id ASIGNACION
+    |iden:ids coma ASIGNACION;
+
+ASIGNACION::=igual EXP2
+    |igual neww iden
+    |igual neww iden parentesisA PARAMETROS parentesisC
+    |iden:ids ASIGNACION{:RESULT=ids;:} 
+    |iden:ids coma ASIGNACION:idl{:RESULT=ids+","+idl;:}
+    |;
+
+EXP2::=iden:ids EXP2 {:RESULT=ids;:} 
+    |entero:val EXP2
+    |decimal:val EXP2
+    |cadena:val EXP2
+    |bool:val EXP2
+    |caracter:val EXP2
+    |EXP3
+    |;
+
+EXP3::=mas EXP2:val2
+    |menos EXP2:val2
+    |mul EXP2:val2
+    |div EXP2:val2
+    |mod EXP2:val2
+    |menorq EXP2:val2
+    |menorIgual EXP2:val2
+    |mayorq EXP2:val2
+    |mayorIgual EXP2:val2
+    |diferente EXP2:val2
+    |igualigual EXP2:val2
+    |igual EXP2:val2;
+
+CUERPOMETODO::=VISIBILIDAD DECLARARATRI puntoComa {:System.out.println("seclaracion");:} CUERPOMETODO 
+    |SENTENCIAS CUERPOMETODO
+    |VISIBILIDAD iden parentesisA parentesisC puntoComa
+    |;
+
+SENTENCIAS::=IF
+    |FOR
+    |WHILE
+    |DOWHILE
+    |SWITCH;
+
+IF::=resIf parentesisA   EXP2     parentesisC parentA CUERPOMETODO parentC CIF;
+
+CIF::= resElse parentA CUERPOMETODO parentC
+    |elseif parentesisA parentesisC parentA CUERPOMETODO parentC CIF
+    |;
+
+FOR::=resFor parentesisA VISIBILIDAD DECLARARATRI puntoComa    EXP2    puntoComa INCREMENTO parentesisC parentA CUERPOMETODO PARA parentC;
+
+INCREMENTO::= iden masmas
+    |iden menmen
+    |masmas
+    |menmen;
+
+WHILE::= resWhile parentesisA   EXP2    parentesisC parentA CUERPOMETODO PARA parentC;
+
+DOWHILE::=resDo parentA CUERPOMETODO parentC resWhile parentesisA   EXP2    parentesisC puntoComa;
+
+SWITCH::=resswitch parentesisA EXP2 parentesisC parentA CASES parentC;
+
+CASES::=resCase comina VALOR comina dosp CUERPOMETODO resbreak puntoComa CASES
+    |resdefault dosp CUERPOMETODO resbreak puntoComa CASES
+    |;
+
+VALOR::=entero
+    |decimal
+    |cadena
+    |bool
+    |iden
+    |caracter
+    |comi
+    |palabra
+    |;
+
+PARA::=resbreak
+    |retu
+    |;
+
+PARAMETROS::=TIPO iden PARAMETROS{:p++;:}
+    |coma TIPO iden PARAMETROS {:p++;:}
+    |TIPO llamaA llamaC iden PARAMETROS {:p++;:}
+    |{:p=0;:};
+
+LISTAID::=iden:ids coma LISTAID:id1 {:RESULT=ids+","+id1;:};
+
+TIPO::=resInteger:val {:RESULT=val;:}
+    |resBoolean:val {:RESULT=val;:}
+    |resString:val {:RESULT=val;:}
+    |resChar:val {:RESULT=val;:}
+    |resDouble:val {:RESULT=val;:}
+    |resObject:val {:RESULT=val;:};
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+CUERPOH::=head mayorq{:System.out.println("inicio head");:} CCHEAD fhead{:System.out.println("fin head");:} CUERPOH
+    |bodyy mayorq{:System.out.println("inicio body");:} CCBODY fbody{:System.out.println("fin body");:} CUERPOH
+    |;
+
+CCHEAD::=title mayorq{:System.out.println("inicio title");:} EXP:ex ftitle{:System.out.println("fin title "+ex);:} CUERPOH
+    |;
+
+CCBODY::= iden:ids CCBODY {:System.out.println(""+ ids);:}
+    |h1 ATRIBUTOS mayorq CCBODY fh1 CCBODY
+    |h2 ATRIBUTOS mayorq CCBODY fh2 CCBODY
+    |h3 ATRIBUTOS mayorq CCBODY fh3 CCBODY
+    |h4 ATRIBUTOS mayorq CCBODY fh4 CCBODY
+    |h5 ATRIBUTOS mayorq CCBODY fh5 CCBODY
+    |h6 ATRIBUTOS mayorq CCBODY fh6 CCBODY
+    |p ATRIBUTOS mayorq CCBODY fp CCBODY
+    |divh ATRIBUTOS mayorq CCBODY fdivh CCBODY
+    |br CCBODY
+    |hr CCBODY
+    |table ATRIBUTOS mayorq CCBODY ftable CCBODY
+    |tr ATRIBUTOS mayorq CCBODY ftr CCBODY
+    |th ATRIBUTOS mayorq CCBODY fth CCBODY
+    |td ATRIBUTOS mayorq CCBODY ftd CCBODY
+    |reportt CUERPORE freportt
+    |;
+
+ATRIBUTOS::=color igual comih COLOR comih
+    |textcolor igual comih COLOR comih
+    |align igual comih LADO comih
+    |font igual comih TIPOH comih
+    |;
+
+COLOR::=rojo
+    |amarillo
+    |azul
+    |verde
+    |gris
+    |anaranjado
+    |morado
+    |;
+
+LADO::=izquierda
+    |derecha
+    |centrado
+    |;
+
+TIPOH::=;
+
+TIPOHR::=resInteger:intt
+    |resBoolean:bol
+    |resString:str
+    |resChar:cha
+    |resDouble:dou
+    |iden:ids;
+
+EXP::= iden:ids {:RESULT=ids;:} 
+    |entero:val
+    |decimal:val
+    |cadena:val
+    |bool:val
+    |caracter:val
+    |reportt CUERPORE freportt
+    |;
+
+CUERPORE::= TIPOHR iden:ids ASIGVAR puntoComa
+    |;
+
+ASIGVAR::=igual ASIGVAR
+    |entero:val ASIGVAR  
+    |decimal:val ASIGVAR
+    |cadena:val ASIGVAR
+    |bool:val ASIGVAR
+    |caracter:val ASIGVAR
+    |iden:ids ASIGVAR
+    |mas ASIGVAR
+    |menos ASIGVAR
+    |mul ASIGVAR
+    |div ASIGVAR
+    |mod ASIGVAR
+    |parentesisA ASIGVAR:val1 parentesisC ASIGVAR
+    |;
+
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+REPO::=scoree dosp llamaA  llamaC coma REPO
+    |jclas dosp llamaA parentA  parentC llamaC coma REPO
+    |jvara dosp llamaA  llamaC coma REPO
+    |jmeto dosp llamaA  llamaC coma REPO
+    |jcome dosp llamaA  llamaC coma REPO
+    |;
+
+    
