@@ -28,11 +28,13 @@
                             <asp:Button runat="server" OnClick="Analizar" Text="Analizar" CssClass="btn btn-default" /> 
                             &nbsp; 
                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                            <br />
                         </div>
                         <div class="col-md-offset-2 col-md-10">               
                             <asp:Button runat="server" OnClick="Mostrar" Text="MostrarArbol" CssClass="btn btn-default" />         
                             <br />
-                            <asp:Image ID="Image1" runat="server" Visible="true" ImageUrl="~/bin/AST.png" />
+                            <br />
+                            <asp:Image ID="Image1" runat="server" Visible="false" ImageUrl="~/bin/AST.png" />
                         </div>
                     </div>
             </section>

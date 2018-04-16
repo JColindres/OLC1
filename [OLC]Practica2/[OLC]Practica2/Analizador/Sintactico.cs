@@ -37,10 +37,14 @@ namespace _OLC_Practica2.Analizador
 
         private static void generarImagen(ParseTreeNode raiz)
         {
-            String grafo_en_DOT = ControlDOT.getDOT(raiz);
-            DOT dot = new DOT();
-            BinaryImage img = dot.ToPNG(grafo_en_DOT);
-            img.Save("C:/Users/pablo/Documents/1er-Sem-2018/OLC1/[OLC]Practica2/[OLC]Practica2/bin/AST.png");
+            try
+            {
+                String grafo_en_DOT = ControlDOT.getDOT(raiz);
+                DOT dot = new DOT();
+                BinaryImage img = dot.ToPNG(grafo_en_DOT);
+                img.Save("C:/Users/pablo/Documents/1er-Sem-2018/OLC1/[OLC]Practica2/[OLC]Practica2/bin/AST.png");
+            }
+            catch (Exception e) { }
         }
     }
 }

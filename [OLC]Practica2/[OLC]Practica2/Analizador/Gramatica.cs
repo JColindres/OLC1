@@ -24,14 +24,25 @@ namespace _OLC_Practica2.Analizador
             var mul = ToTerm("*");
             var div = ToTerm("/");
             var pot = ToTerm("^");
+            var parA = ToTerm("(");
+            var parC = ToTerm(")");
+            var corA = ToTerm("[");
+            var corC = ToTerm("]");
+            var pYc = ToTerm(";");
+            var coma = ToTerm(",");
+            var asig = ToTerm("::=");
+            var igual = ToTerm("=");
+            var programa = ToTerm("programa");
             var imprimir = ToTerm("imprimir");
             var raiz = ToTerm("raiz");
             var graficar = ToTerm("graficar");
-            var parA = ToTerm("(");
-            var parC = ToTerm(")");
-            var pYc = ToTerm(";");
-            var coma = ToTerm(",");
-            var comi = ToTerm("\"");
+            var variable = ToTerm("var");
+            var resInt = ToTerm("int");
+            var resDouble = ToTerm("double");
+            var resString = ToTerm("string");
+            var resChar = ToTerm("char");
+            var resBool = ToTerm("bool");
+            var resVoid = ToTerm("void");
             #endregion
 
             #region No Terminales
@@ -39,53 +50,70 @@ namespace _OLC_Practica2.Analizador
                 E = new NonTerminal("E"),
                 F = new NonTerminal("F"),
                 PROGRAMA = new NonTerminal("PROGRAMA"),
-                SENTENCIAS = new NonTerminal("SENTENCIAS"),
+                CUERPOS = new NonTerminal("CUERPOS"),
+                CUERPO = new NonTerminal("CUERPO"),
+                ATRIBUTOS = new NonTerminal("ATRIBUTOS"),
+                ATRIBUTO = new NonTerminal("ATRIBUTO"),
+                DECLARACION = new NonTerminal("DECLARACION"),
+                ASIGNACION = new NonTerminal("ASIGNACION"),
+                METODOS = new NonTerminal("METODOS"),
+                TIPO = new NonTerminal("TIPO"),
                 IMP = new NonTerminal("IMP"),
                 RAIZ = new NonTerminal("RAIZ"),
                 GRAFICAR = new NonTerminal("GRAFICAR"),
-                LLAMFUNC1 = new NonTerminal("LLAMFUNC1"),
-                LLAMFUNC2 = new NonTerminal("LLAMFUNC2"),
-                OPFUNC = new NonTerminal("OPFUNC"),
-                PARAM = new NonTerminal("PARAM"),
-                PARAMUNIC = new NonTerminal("PARAMUNIC"),
-                OPERADOR = new NonTerminal("OPERADOR");
+                LISTA_ID = new NonTerminal("LISTA_ID"),
+                LISTA_PARAM = new NonTerminal("LISTA_PARAM"),
+                DECLA = new NonTerminal("DECLA"),
+                UNICO = new NonTerminal("UNICO");
             #endregion
 
             #region Gramatica
             S.Rule = PROGRAMA;
 
-            PROGRAMA.Rule = MakePlusRule(PROGRAMA,SENTENCIAS);
+            PROGRAMA.Rule = programa + id + corA + CUERPOS + corC;
 
-            SENTENCIAS.Rule = E
+            CUERPOS.Rule = MakeStarRule(CUERPOS, CUERPO);
+
+            CUERPO.Rule = ATRIBUTOS
+                | METODOS;
+
+            ATRIBUTOS.Rule = MakePlusRule(ATRIBUTOS, ATRIBUTO);
+
+            ATRIBUTO.Rule = DECLARACION
+                | ASIGNACION
                 | IMP
                 | RAIZ
                 | GRAFICAR;
 
-            IMP.Rule = imprimir + parA + PARAMUNIC + parC + pYc;
+            METODOS.Rule = TIPO + id + parA + LISTA_PARAM + parC + corA + ATRIBUTOS + corC
+                | TIPO + id + parA + parC + corA + ATRIBUTOS + corC;
 
-            RAIZ.Rule = raiz + parA + PARAMUNIC + coma + numero + parC + pYc;
+            DECLARACION.Rule = variable + LISTA_ID + pYc;
+
+            DECLA.Rule = variable + id;
+
+            ASIGNACION.Rule = variable + id + asig + E + pYc
+                | id + asig + E + pYc;
+
+            IMP.Rule = imprimir + parA + UNICO + parC + pYc;
+
+            RAIZ.Rule = raiz + parA + UNICO + coma + E + parC + pYc;
 
             GRAFICAR.Rule = graficar + parA + cadena + coma + cadena + coma + E + coma + E + coma + cadena + parC + pYc;
 
-            PARAMUNIC.Rule = LLAMFUNC1
-                | E;
+            LISTA_ID.Rule = MakePlusRule(LISTA_ID, coma, id);
 
-            LLAMFUNC1.Rule = OPFUNC
-                | LLAMFUNC2;
+            LISTA_PARAM.Rule = MakePlusRule(LISTA_PARAM, coma, DECLA)
+                | MakePlusRule(LISTA_PARAM, coma, E);
+            
+            UNICO.Rule = E; 
 
-            OPFUNC.Rule = MakePlusRule(LLAMFUNC2, OPERADOR, E)
-                | MakePlusRule(E, OPERADOR, LLAMFUNC1);
-
-            LLAMFUNC2.Rule = id + parA + PARAM + parC;
-
-            PARAM.Rule = MakePlusRule(PARAM, coma, E)
-                | MakePlusRule(PARAM, OPERADOR, E);
-
-            OPERADOR.Rule = mas
-                | menos
-                | mul
-                | div
-                | pot;
+            TIPO.Rule = resInt
+                | resDouble
+                | resString
+                | resChar
+                | resBool
+                | resVoid;
 
             E.Rule = E + mas + E
                 | E + menos + E
@@ -103,11 +131,11 @@ namespace _OLC_Practica2.Analizador
 
             #region Preferencias
             this.Root = S;
-            this.MarkTransient(S,F,LLAMFUNC1,OPERADOR,SENTENCIAS);
+            this.MarkTransient(S, F, CUERPO, ATRIBUTO, TIPO);
             this.RegisterOperators(1, Associativity.Left, mas, menos);
             this.RegisterOperators(2, Associativity.Left, mul, div);
             this.RegisterOperators(3, Associativity.Left, pot);
-            this.MarkPunctuation("(",")",",",";");
+            this.MarkPunctuation("(",")",",",";","[","]","var","::=");
             #endregion
         }
     }
