@@ -1,4 +1,5 @@
 ﻿using _OLC_Practica2.Analizador;
+using Irony.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace _OLC_Practica2
 
         protected void Analizar(object sender, EventArgs e)
         {
-            bool resultado = Sintactico.analizar(entrada.Text);
-            if (resultado)
+            ParseTreeNode resultado = Sintactico.analizar(entrada.Text);
+            if (resultado != null)
             {
                 Label1.Text = "La cadena es correcta";
             }
@@ -26,6 +27,11 @@ namespace _OLC_Practica2
             {
                 Label1.Text = "La cadena es incorrecta";
             }
+        }
+
+        protected void Mostrar(object sender, EventArgs e)
+        {
+            Image1.Visible = true;
         }
     }
 }

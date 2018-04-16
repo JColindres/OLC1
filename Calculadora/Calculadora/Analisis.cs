@@ -24,7 +24,7 @@ namespace Calculadora
             if (arbol.Root != null)
             {
                 Genarbol(arbol.Root);
-                GenerateGraph("Ejemplo.txt", "C:/Users/Jose/Documents/graficas/");
+                GenerateGraph("Ejemplo.txt", "C:/Users/pablo/Desktop/");
                 try
                 {
                     resultado = (Double) ejecutar(arbol.Root);
@@ -246,7 +246,7 @@ namespace Calculadora
         }
         public void Genarbol(ParseTreeNode raiz)
         {
-            System.IO.StreamWriter f = new System.IO.StreamWriter("C:/Users/pablo/Documents/1er-Sem-2018/OLC1/Ejemplo.txt");
+            System.IO.StreamWriter f = new System.IO.StreamWriter("C:/Users/pablo/Desktop/Ejemplo.txt");
             f.Write("digraph lista{ rankdir=TB;node [shape = box, style=rounded]; ");
             graph = "";
             Generar(raiz);

@@ -1,0 +1,15 @@
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Hoja de Trabajo 3.exe.config
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Hoja de Trabajo 3.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Hoja de Trabajo 3.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Irony.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Irony.Interpreter.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Irony.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\bin\Debug\Irony.Interpreter.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja de Trabajo 3.csprojResolveAssemblyReference.cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Interop.WINGRAPHVIZLib.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja de Trabajo 3.csproj.ResolveComReference.cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja_de_Trabajo_3.Form1.resources
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja_de_Trabajo_3.Properties.Resources.resources
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja de Trabajo 3.csproj.GenerateResource.Cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja de Trabajo 3.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Hoja de Trabajo 3\Hoja de Trabajo 3\obj\Debug\Hoja de Trabajo 3.pdb

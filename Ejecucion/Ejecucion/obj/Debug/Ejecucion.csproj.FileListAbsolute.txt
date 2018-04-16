@@ -1,0 +1,70 @@
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\ApplicationInsights.config
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\csc.exe
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CSharp.Core.targets
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\Microsoft.VisualBasic.Core.targets
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\System.Collections.Immutable.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\System.Reflection.Metadata.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\vbc.exe
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\VBCSCompiler.exe
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\roslyn\VBCSCompiler.exe.config
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Ejecucion.dll.config
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Ejecucion.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Ejecucion.pdb
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.Agent.Intercept.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.DependencyCollector.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.PerfCounterCollector.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.ServerTelemetryChannel.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.Web.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.WindowsServer.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.ApplicationInsights.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.DependencyCollector.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.ServerTelemetryChannel.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.Web.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.AI.WindowsServer.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.ApplicationInsights.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\obj\Debug\Ejecucion.csprojResolveAssemblyReference.cache
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\obj\Debug\Ejecucion.dll
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\obj\Debug\Ejecucion.pdb
+c:\users\jose\documents\visual studio 2015\Projects\Ejecucion\Ejecucion\bin\Irony.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\ApplicationInsights.config
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\csc.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\vbc.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\VBCSCompiler.exe
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Ejecucion.dll.config
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Ejecucion.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Ejecucion.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Irony.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.Web.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.ApplicationInsights.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.Web.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.ApplicationInsights.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\obj\Debug\Ejecucion.csprojResolveAssemblyReference.cache
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\obj\Debug\Ejecucion.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\obj\Debug\Ejecucion.pdb
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\obj\Debug\Interop.WINGRAPHVIZLib.dll
+C:\Users\pablo\Documents\1er-Sem-2018\OLC1\Ejecucion\Ejecucion\obj\Debug\Ejecucion.csproj.ResolveComReference.cache

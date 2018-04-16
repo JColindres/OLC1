@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Irony.Ast;
 using Irony.Parsing;
+using WINGRAPHVIZLib;
 
 namespace _OLC_Practica2.controlDOT
 {
@@ -23,12 +24,19 @@ namespace _OLC_Practica2.controlDOT
         private static String grafo;
 
         public static String getDOT(ParseTreeNode raiz) {
-            grafo = "digraph G{";
-            grafo += "nodo0[label=\"" + escapar(raiz.ToString()) + "\"];\n";
-            contador = 1;
-            recorrerAST("nodo0",raiz);
-            grafo += "}";
-            return grafo;
+            try
+            {
+                grafo = "digraph G{";
+                grafo += "nodo0[label=\"" + escapar(raiz.ToString()) + "\"];\n";
+                contador = 1;
+                recorrerAST("nodo0", raiz);
+                grafo += "}";
+                return grafo;
+            }
+            catch (Exception e)
+            {
+                return "error" + e;
+            }
         }
 
         private static void recorrerAST(String padre, ParseTreeNode hijos)
@@ -45,7 +53,7 @@ namespace _OLC_Practica2.controlDOT
 
         private static String escapar(String cadena)
         {
-            cadena = cadena.Replace("\\","\\\\");
+            cadena = cadena.Replace("\\", "\\\\");
             cadena = cadena.Replace("\"", "\\\"");
             return cadena;
         }
