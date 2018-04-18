@@ -36,7 +36,8 @@ namespace _OLC_Practica2.Ejecutar
                 case "cadena":
                     String cadena = raiz.Token.Text.Replace("\"", "");
                     return new Resultado("cadena", cadena);
-
+                case "booleano":
+                    return new Resultado("booleano", raiz.Token.Text);
                 case "id":
                     String iden = raiz.Token.Text.Replace("\"", "");
                     if (Programa.tablaGlobal.getSimbolo(iden) != null)
@@ -53,6 +54,8 @@ namespace _OLC_Practica2.Ejecutar
                     }
                 case "LLAMADA":
                     //enviar como parametro la raiz al metodo ejecutar para obtener el valor de la funcion
+                    break;
+                case "-":
                     break;
             }
 

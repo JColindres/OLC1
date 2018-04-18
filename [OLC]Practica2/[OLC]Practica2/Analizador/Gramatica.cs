@@ -15,6 +15,9 @@ namespace _OLC_Practica2.Analizador
             NumberLiteral doble = new NumberLiteral("doble");
             IdentifierTerminal id = new IdentifierTerminal("id");
             StringLiteral cadena = TerminalFactory.CreateCSharpString("cadena");
+            ConstantTerminal booleano = new ConstantTerminal("booleano");
+            booleano.Add("true", true);
+            booleano.Add("false", false);
             CommentTerminal comentario2 = new CommentTerminal("comentario2", "/*", "*/");
             CommentTerminal comentario1 = new CommentTerminal("comentario1", "//", "\n", "\r\n");
             base.NonGrammarTerminals.Add(comentario2);
@@ -217,7 +220,8 @@ namespace _OLC_Practica2.Analizador
                 | LLAMADA
                 | id
                 | doble
-                | cadena;
+                | cadena
+                | booleano;
 
             EXPR.Rule = E + mayor + E
                 | E + menor + E
@@ -227,9 +231,9 @@ namespace _OLC_Practica2.Analizador
                 | E + noIgual + E
                 | E;
 
-            EXPL.Rule = EXPR + OR + EXPR
-                | EXPR + AND + EXPR
-                | NOT + EXPR
+            EXPL.Rule = EXPL + OR + EXPR
+                | EXPL + AND + EXPR
+                | NOT + EXPL
                 | EXPR;
             #endregion
 

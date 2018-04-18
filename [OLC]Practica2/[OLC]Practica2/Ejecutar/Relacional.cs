@@ -17,9 +17,45 @@ namespace _OLC_Practica2.Ejecutar
         public Resultado relacionar(ParseTreeNode raiz)
         {
             opA = new Aritmetica();
-            Resultado resultado1 = opA.operar(raiz.ChildNodes[0]);
-            opA = new Aritmetica();
-            Resultado resultado2 = opA.operar(raiz.ChildNodes[2]);
+            Resultado resultado1 = null;
+            Resultado resultado2 = null;
+
+            switch (raiz.Term.Name)
+            {
+                case "EXPL":
+                    if (raiz.ChildNodes.Count == 3)
+                    {
+                        resultado1 = relacionar(raiz.ChildNodes[0]);
+                        resultado2 = relacionar(raiz.ChildNodes[2]);
+                    }
+                    else
+                    {
+                        return relacionar(raiz.ChildNodes[0]);
+                    }
+                    break;
+                case "NOT":
+                    resultado1 = relacionar(raiz.ChildNodes[1]);
+                    if (!Convert.ToBoolean(resultado1.valor))
+                    {
+                        return new Resultado("booleano", true);
+                    }
+                    else
+                    {
+                        return new Resultado("booleano", false);
+                    }
+                case "EXPR":
+                    if (raiz.ChildNodes.Count == 3)
+                    {
+                        resultado1 = opA.operar(raiz.ChildNodes[0]);
+                        resultado2 = opA.operar(raiz.ChildNodes[2]);
+                    }
+                    else
+                    {
+                        return opA.operar(raiz.ChildNodes[0]);
+                    }
+                    break;
+            }
+
 
             String tipoRelacional = raiz.ChildNodes[1].Token.Text;
 
@@ -29,56 +65,56 @@ namespace _OLC_Practica2.Ejecutar
                 case "==":
                     if (resultado1.valor.ToString() == resultado2.valor.ToString())
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
                 case ">":
                     if (Double.Parse(resultado1.valor + "") > Double.Parse(resultado2.valor + ""))
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
                 case "<":
                     if (Double.Parse(resultado1.valor + "") < Double.Parse(resultado2.valor + ""))
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
                 case "<=":
                     if (Double.Parse(resultado1.valor + "") <= Double.Parse(resultado2.valor + ""))
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
                 case ">=":
                     if (Double.Parse(resultado1.valor + "") >= Double.Parse(resultado2.valor + ""))
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
                 case "!=":
                     if (Double.Parse(resultado1.valor + "") != Double.Parse(resultado2.valor + ""))
                     {
-                        return new Resultado("Boolean", true);
+                        return new Resultado("booleano", true);
                     }
                     else
                     {
-                        return new Resultado("Boolean", false);
+                        return new Resultado("booleano", false);
                     }
             }
 

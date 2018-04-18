@@ -282,7 +282,7 @@ namespace _OLC_Practica2.Ejecutar
                             tipo = resultado.tipo;
                             ambito = "local";
                             Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
-                            Boolean estado = tablaGlobal.addSimbolo(simbolo);
+                            Boolean estado = tablaLocal.addSimbolo(simbolo);
                             if (!estado)
                             {
                                 consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
@@ -297,14 +297,14 @@ namespace _OLC_Practica2.Ejecutar
                         {
                             nombre = nodo.ChildNodes[0].Token.Text;
                             ambito = "local";
-                            Boolean estado1 = tablaGlobal.existe(nombre);
+                            Boolean estado1 = tablaLocal.existe(nombre);
                             if (estado1)
                             {
                                 opA = new Aritmetica();
                                 resultado = opA.operar(nodo.ChildNodes[1]);
-                                tablaGlobal.removeSimbolo(nombre);
+                                tablaLocal.removeSimbolo(nombre);
                                 Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
-                                Boolean estado = tablaGlobal.addSimbolo(simbolo);
+                                Boolean estado = tablaLocal.addSimbolo(simbolo);
                                 if (!estado)
                                 {
                                     consola.Text = consola.Text + "\n" + "La variable " + nombre + " no existe.";
@@ -324,9 +324,9 @@ namespace _OLC_Practica2.Ejecutar
                     case "id":
                         lista = lista + nodo.Token.Text.Replace("\"", "") + ",";
                         break;
-                    case "IF":
+                    case "SI":
                         opR = new Relacional();
-                        resultado = opR.relacionar(nodo.ChildNodes[0]);
+                        resultado = opR.relacionar(nodo.ChildNodes[1]);
                         TablaSimbolo aux = tablaLocal;
                         //creo una nueva tabla para cambiar al ambito if
                         tablaLocal = new TablaSimbolo();
@@ -334,14 +334,14 @@ namespace _OLC_Practica2.Ejecutar
                         if (Boolean.Parse(resultado.valor + ""))
                         {
 
-                            ejecutar(nodo.ChildNodes[1]);
+                            ejecutar(nodo.ChildNodes[2]);
 
 
 
                         }
                         else
                         {
-                            //ejecutar sentencias else
+                            ejecutar(nodo.ChildNodes[4].ChildNodes[1]);
                         }
                         //regreso al ambito anterior
                         tablaLocal = aux;
