@@ -13,7 +13,17 @@
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="entrada" CssClass="col-md-2 control-label">Entrada</asp:Label>
                         <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="entrada" CssClass="form-control" Height="172px" TextMode="MultiLine" Width="646px" />
+                            <asp:TextBox runat="server" ID="entrada" CssClass="form-control" Height="172px" TextMode="MultiLine" Width="646px" Text="programa asd [
+var y ::= (5+6)+(2+6)^2;
+var z ::= y+1;
+y ::= z+1;
+principal () [
+imprimir(y);
+y ::= y/7;
+imprimir(y);
+raiz(36,2);
+]
+]"/>
                         </div>
                     </div>
                     <div class="form-group">

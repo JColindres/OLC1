@@ -263,6 +263,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="controlDOT\ControlDOT.cs" />
+    <Compile Include="Ejecutar\Aritmetica.cs" />
+    <Compile Include="Ejecutar\Clase.cs" />
+    <Compile Include="Ejecutar\Funcion.cs" />
+    <Compile Include="Ejecutar\Metodo.cs" />
+    <Compile Include="Ejecutar\Programa.cs" />
+    <Compile Include="Ejecutar\Relacional.cs" />
+    <Compile Include="Ejecutar\Resultado.cs" />
+    <Compile Include="Ejecutar\Simbolo.cs" />
+    <Compile Include="Ejecutar\TablaSimbolo.cs" />
     <Compile Include="Reportes.aspx.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

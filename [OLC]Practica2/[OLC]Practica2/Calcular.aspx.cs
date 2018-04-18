@@ -22,10 +22,13 @@ namespace _OLC_Practica2
             if (resultado != null)
             {
                 Label1.Text = "La cadena es correcta";
+                salida.Text = "Resultado...";
+                Ejecutar.Programa programa = new Ejecutar.Programa(salida,resultado);
             }
             else
             {
                 Label1.Text = "La cadena es incorrecta";
+                salida.Text = "error";
             }
         }
 
