@@ -34,7 +34,7 @@ namespace _OLC_Practica2
 
         protected void Mostrar(object sender, EventArgs e)
         {
-            Image1.Visible = true;
+            imagen1.Visible = true;
         }
     }
 }

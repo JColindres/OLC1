@@ -58,64 +58,226 @@ namespace _OLC_Practica2.Ejecutar
 
 
             String tipoRelacional = raiz.ChildNodes[1].Token.Text;
+            String tipo1;
+            String tipo2;
 
-            //falta verificar tipos, deben tomar la idea de la operacion arimetica para este caso
-            switch (tipoRelacional)
+            if (resultado1 != null && resultado2 != null)
             {
-                case "==":
-                    if (resultado1.valor.ToString() == resultado2.valor.ToString())
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
-                case ">":
-                    if (Double.Parse(resultado1.valor + "") > Double.Parse(resultado2.valor + ""))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
-                case "<":
-                    if (Double.Parse(resultado1.valor + "") < Double.Parse(resultado2.valor + ""))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
-                case "<=":
-                    if (Double.Parse(resultado1.valor + "") <= Double.Parse(resultado2.valor + ""))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
-                case ">=":
-                    if (Double.Parse(resultado1.valor + "") >= Double.Parse(resultado2.valor + ""))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
-                case "!=":
-                    if (Double.Parse(resultado1.valor + "") != Double.Parse(resultado2.valor + ""))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
+                switch (tipoRelacional)
+                {
+                    case "==":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (resultado1.valor.ToString() == resultado2.valor.ToString())
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        if (resultado1.valor.ToString() == resultado2.valor.ToString())
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                }
+                                break;
+                        }
+                        break;
+                    case ">":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (Double.Parse(resultado1.valor + "") > Double.Parse(resultado2.valor + ""))
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case "<":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (Double.Parse(resultado1.valor + "") < Double.Parse(resultado2.valor + ""))
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case "<=":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (Double.Parse(resultado1.valor + "") <= Double.Parse(resultado2.valor + ""))
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case ">=":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (Double.Parse(resultado1.valor + "") >= Double.Parse(resultado2.valor + ""))
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case "!=":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        if (resultado1.valor.ToString() != resultado2.valor.ToString())
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                    case "cadena":
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        break;
+                                    case "cadena":
+                                        if (resultado1.valor.ToString() != resultado2.valor.ToString())
+                                        {
+                                            return new Resultado("booleano", true);
+                                        }
+                                        else
+                                        {
+                                            return new Resultado("booleano", false);
+                                        }
+                                }
+                                break;
+                        }
+                        break;
+                }
             }
 
             return null;

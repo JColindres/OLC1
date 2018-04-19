@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using SingularSys.Jep;
 
 namespace _OLC_Practica2.Ejecutar
 {
@@ -175,18 +176,25 @@ namespace _OLC_Practica2.Ejecutar
                             nombre = nodo.ChildNodes[1].Token.Text;
                             opA = new Aritmetica();
                             resultado = opA.operar(nodo.ChildNodes[2]);
-                            tipo = resultado.tipo;
-                            ambito = "global";
-                            Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
-                            Boolean estado = tablaGlobal.addSimbolo(simbolo);
-                            if (!estado)
+                            if (resultado == null)
                             {
-                                consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
-                                //se debe incluir el tipo de error, linea y columna
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
                             }
                             else
                             {
-                                consola.Text = consola.Text + "\n" + "Se guardo la variable " + nombre + " = " + resultado.valor + ".";
+                                tipo = resultado.tipo;
+                                ambito = "global";
+                                Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
+                                Boolean estado = tablaGlobal.addSimbolo(simbolo);
+                                if (!estado)
+                                {
+                                    consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
+                                    //se debe incluir el tipo de error, linea y columna
+                                }
+                                else
+                                {
+                                    consola.Text = consola.Text + "\n" + "Se guardo la variable " + nombre + " = " + resultado.valor + ".";
+                                }
                             }
                         }
                         else
@@ -198,17 +206,24 @@ namespace _OLC_Practica2.Ejecutar
                             {
                                 opA = new Aritmetica();
                                 resultado = opA.operar(nodo.ChildNodes[1]);
-                                tablaGlobal.removeSimbolo(nombre);
-                                Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
-                                Boolean estado = tablaGlobal.addSimbolo(simbolo);
-                                if (!estado)
+                                if (resultado == null)
                                 {
-                                    consola.Text = consola.Text + "\n" + "La variable " + nombre + " no existe.";
-                                    //se debe incluir el tipo de error, linea y columna
+                                    consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
                                 }
                                 else
                                 {
-                                    consola.Text = consola.Text + "\n" + "Se actualizo la variable " + nombre + " = " + resultado.valor + ".";
+                                    tablaGlobal.removeSimbolo(nombre);
+                                    Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
+                                    Boolean estado = tablaGlobal.addSimbolo(simbolo);
+                                    if (!estado)
+                                    {
+                                        consola.Text = consola.Text + "\n" + "La variable " + nombre + " no existe.";
+                                        //se debe incluir el tipo de error, linea y columna
+                                    }
+                                    else
+                                    {
+                                        consola.Text = consola.Text + "\n" + "Se actualizo la variable " + nombre + " = " + resultado.valor + ".";
+                                    }
                                 }
                             }
                             else
@@ -279,18 +294,25 @@ namespace _OLC_Practica2.Ejecutar
                             nombre = nodo.ChildNodes[1].Token.Text;
                             opA = new Aritmetica();
                             resultado = opA.operar(nodo.ChildNodes[2]);
-                            tipo = resultado.tipo;
-                            ambito = "local";
-                            Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
-                            Boolean estado = tablaLocal.addSimbolo(simbolo);
-                            if (!estado)
+                            if (resultado == null)
                             {
-                                consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
-                                //se debe incluir el tipo de error, linea y columna
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
                             }
                             else
                             {
-                                consola.Text = consola.Text + "\n" + "Se guardo la variable " + nombre + " = " + resultado.valor + ".";
+                                tipo = resultado.tipo;
+                                ambito = "local";
+                                Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
+                                Boolean estado = tablaLocal.addSimbolo(simbolo);
+                                if (!estado)
+                                {
+                                    consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
+                                    //se debe incluir el tipo de error, linea y columna
+                                }
+                                else
+                                {
+                                    consola.Text = consola.Text + "\n" + "Se guardo la variable " + nombre + " = " + resultado.valor + ".";
+                                }
                             }
                         }
                         else
@@ -302,17 +324,24 @@ namespace _OLC_Practica2.Ejecutar
                             {
                                 opA = new Aritmetica();
                                 resultado = opA.operar(nodo.ChildNodes[1]);
-                                tablaLocal.removeSimbolo(nombre);
-                                Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
-                                Boolean estado = tablaLocal.addSimbolo(simbolo);
-                                if (!estado)
+                                if (resultado == null)
                                 {
-                                    consola.Text = consola.Text + "\n" + "La variable " + nombre + " no existe.";
-                                    //se debe incluir el tipo de error, linea y columna
+                                    consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
                                 }
                                 else
                                 {
-                                    consola.Text = consola.Text + "\n" + "Se actualizo la variable " + nombre + " = " + resultado.valor + ".";
+                                    tablaLocal.removeSimbolo(nombre);
+                                    Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
+                                    Boolean estado = tablaLocal.addSimbolo(simbolo);
+                                    if (!estado)
+                                    {
+                                        consola.Text = consola.Text + "\n" + "La variable " + nombre + " no existe.";
+                                        //se debe incluir el tipo de error, linea y columna
+                                    }
+                                    else
+                                    {
+                                        consola.Text = consola.Text + "\n" + "Se actualizo la variable " + nombre + " = " + resultado.valor + ".";
+                                    }
                                 }
                             }
                             else
@@ -331,40 +360,99 @@ namespace _OLC_Practica2.Ejecutar
                         //creo una nueva tabla para cambiar al ambito if
                         tablaLocal = new TablaSimbolo();
                         tablaLocal.cambiarAmbito(aux);
-                        if (Boolean.Parse(resultado.valor + ""))
+                        if (resultado == null)
                         {
-
-                            ejecutar(nodo.ChildNodes[2]);
-
-
-
+                            consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
                         }
                         else
                         {
-                            ejecutar(nodo.ChildNodes[4].ChildNodes[1]);
+                            if (Boolean.Parse(resultado.valor + ""))
+                            {
+                                if (nodo.ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                {
+
+                                }
+                                else
+                                {
+                                    ejecutar(nodo.ChildNodes[2]);
+                                }
+                            }                            
+                            else
+                            {
+                                ejecutar(nodo.ChildNodes[3]);
+                            }
                         }
                         //regreso al ambito anterior
                         tablaLocal = aux;
                         break;
-                    case "WHILE":
+                    case "SINOSI":
+                        if (nodo.ChildNodes[0].Token.Text == "SINO_SI")
+                        {
+                            opR = new Relacional();
+                            resultado = opR.relacionar(nodo.ChildNodes[1]);
+                            TablaSimbolo aux22 = tablaLocal;
+                            //creo una nueva tabla para cambiar al ambito if
+                            tablaLocal = new TablaSimbolo();
+                            tablaLocal.cambiarAmbito(aux22);
+                            if (resultado == null)
+                            {
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                            }
+                            else
+                            {
+                                if (Boolean.Parse(resultado.valor + ""))
+                                {
+                                    if (nodo.ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        ejecutar(nodo.ChildNodes[2]);
+                                    }
+                                }
+                            }
+                            //regreso al ambito anterior
+                            tablaLocal = aux22;
+                        }
+                        else
+                        {
+                            ejecutar(nodo.ChildNodes[1]);
+                        }
+                        break;
+                    case "SINO":
+                        ejecutar(nodo.ChildNodes[1]);
+                        break;
+                    case "MIENTRAS":
                         /*esta sentencias while ya esta completo, solo que no para porque no hay 
                          forma de comparar un valor puntual con un ID
                          
                        */
                         opR = new Relacional();
-                        resultado = opR.relacionar(nodo.ChildNodes[0]);
+                        resultado = opR.relacionar(nodo.ChildNodes[1]);
                         TablaSimbolo aux2 = tablaLocal;
                         //creo una nueva tabla para cambiar al ambito if
                         tablaLocal = new TablaSimbolo();
                         tablaLocal.cambiarAmbito(aux2);
-                        while (Boolean.Parse(resultado.valor + ""))
+                        if (resultado == null)
                         {
+                            consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                        }
+                        else
+                        {
+                            while (Boolean.Parse(resultado.valor + ""))
+                            {
+                                    if (nodo.ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                    {
 
-                            ejecutar(nodo.ChildNodes[1]);
-                            opR = new Relacional();
-                            resultado = opR.relacionar(nodo.ChildNodes[0]);
-
-
+                                    }
+                                    else
+                                    {
+                                        ejecutar(nodo.ChildNodes[2]);
+                                        opR = new Relacional();
+                                        resultado = opR.relacionar(nodo.ChildNodes[1]);
+                                    }
+                            }
                         }
                         tablaLocal = aux2;
                         break;
@@ -379,6 +467,8 @@ namespace _OLC_Practica2.Ejecutar
                         Otroresultado = opA.operar(nodo.ChildNodes[2]);
                         Double ra = Math.Pow(Double.Parse(resultado.valor + ""), 1 / Double.Parse(Otroresultado.valor + ""));
                         consola.Text = consola.Text + "\n" + ra;
+                        break;
+                    case "SALIR":
                         break;
                 }
             }

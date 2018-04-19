@@ -178,15 +178,15 @@ namespace _OLC_Practica2.Analizador
 
             LLAMFUNC.Rule = LLAMADA + pYc;
 
-            SI.Rule = si + parA + EXPL + parC + corA + ATRIBUTOS + corC + SINO_SI + SINO;
+            SI.Rule = si + parA + EXPL + parC + corA + ATRIBUTOS + corC + SINO_SI;
 
             SINO_SI.Rule = MakePlusRule(SINO_SI, SINOSI)
                 | Empty;
 
-            SINOSI.Rule = sino_si + parA + EXPL + parC + corA + ATRIBUTOS + corC;
+            SINOSI.Rule = sino_si + parA + EXPL + parC + corA + ATRIBUTOS + corC
+                | sino + corA + ATRIBUTOS + corC;
 
-            SINO.Rule = sino + corA + ATRIBUTOS + corC
-                | Empty;
+            SINO.Rule = sino + corA + ATRIBUTOS + corC;
 
             INTERRUMPIR.Rule = interrumpir + parA + E + parC + corA + CASO + DEFECTO + corC;
 
@@ -239,7 +239,7 @@ namespace _OLC_Practica2.Analizador
 
             #region Preferencias
             this.Root = S;
-            this.MarkTransient(TIPO, UNICOS, CUERPOS, CASOS, SINOSI, ATRIBUTO);
+            this.MarkTransient(TIPO, UNICOS, CUERPOS, CASOS, ATRIBUTO);
             this.RegisterOperators(1, Associativity.Left, mas, menos);
             this.RegisterOperators(2, Associativity.Left, mul, div);
             this.RegisterOperators(3, Associativity.Left, pot);

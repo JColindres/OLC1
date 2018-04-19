@@ -62,185 +62,188 @@ namespace _OLC_Practica2.Ejecutar
             String operacion = raiz.ChildNodes[1].Token.Text;
             String tipo1;
             String tipo2;
-            switch (operacion)
+            if (resultado1 != null && resultado2 != null)
             {
-                case "+":
-                    tipo1 = resultado1.tipo;
-                    switch (tipo1)
-                    {
-                        case "doble":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("doble", Double.Parse(resultado1.valor + "") + Double.Parse(resultado2.valor + ""));
+                switch (operacion)
+                {
+                    case "+":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") + Double.Parse(resultado2.valor + ""));
 
-                                case "cadena":
-                                    return new Resultado("cadena", Double.Parse(resultado1.valor + "") + (String)resultado2.valor);
+                                    case "cadena":
+                                        return new Resultado("cadena", Double.Parse(resultado1.valor + "") + (String)resultado2.valor);
 
-                            }
-                            break;
-                        case "cadena":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("cadena", (String)resultado1.valor + Double.Parse(resultado2.valor + ""));
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("cadena", (String)resultado1.valor + Double.Parse(resultado2.valor + ""));
 
-                                case "cadena":
-                                    return new Resultado("cadena", (String)resultado1.valor + (String)resultado2.valor);
+                                    case "cadena":
+                                        return new Resultado("cadena", (String)resultado1.valor + (String)resultado2.valor);
 
-                            }
-                            break;
+                                }
+                                break;
 
-                    }
+                        }
 
-                    break;
-                case "*":
-                    tipo1 = resultado1.tipo;
-                    switch (tipo1)
-                    {
-                        case "doble":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("doble", Double.Parse(resultado1.valor + "") * Double.Parse(resultado2.valor + ""));
+                        break;
+                    case "*":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") * Double.Parse(resultado2.valor + ""));
 
-                                case "cadena":
-                                    //reportar error semantico, linea y columna
-                                    break;
-                            }
-                            break;
-                        case "cadena":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    //reportar error semantico,linea y columna
-                                    break;
-                                case "cadena":
-                                    //Reportar error semantoco, linea y columna
-                                    break;
-                            }
-                            break;
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
 
-                    }
-                    break;
-                case "/":
-                    tipo1 = resultado1.tipo;
-                    switch (tipo1)
-                    {
-                        case "doble":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("doble", Double.Parse(resultado1.valor + "") / Double.Parse(resultado2.valor + ""));
+                        }
+                        break;
+                    case "/":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") / Double.Parse(resultado2.valor + ""));
 
-                                case "cadena":
-                                    //reportar error semantico, linea y columna
-                                    break;
-                            }
-                            break;
-                        case "cadena":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    //reportar error semantico,linea y columna
-                                    break;
-                                case "cadena":
-                                    //Reportar error semantoco, linea y columna
-                                    break;
-                            }
-                            break;
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
 
-                    }
-                    break;
-                case "-":
-                    tipo1 = resultado1.tipo;
-                    switch (tipo1)
-                    {
-                        case "doble":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("doble", Double.Parse(resultado1.valor + "") - Double.Parse(resultado2.valor + ""));
+                        }
+                        break;
+                    case "-":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") - Double.Parse(resultado2.valor + ""));
 
-                                case "cadena":
-                                    //reportar error semantico, linea y columna
-                                    break;
-                            }
-                            break;
-                        case "cadena":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    //reportar error semantico,linea y columna
-                                    break;
-                                case "cadena":
-                                    //Reportar error semantoco, linea y columna
-                                    break;
-                            }
-                            break;
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
 
-                    }
-                    break;
-                case "^":
-                    tipo1 = resultado1.tipo;
-                    switch (tipo1)
-                    {
-                        case "doble":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    return new Resultado("doble", Math.Pow(Double.Parse(resultado1.valor + ""), Double.Parse(resultado2.valor + "")));
+                        }
+                        break;
+                    case "^":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Math.Pow(Double.Parse(resultado1.valor + ""), Double.Parse(resultado2.valor + "")));
 
-                                case "cadena":
-                                    //reportar error semantico, linea y columna
-                                    break;
-                            }
-                            break;
-                        case "cadena":
-                            tipo2 = resultado2.tipo;
-                            switch (tipo2)
-                            {
-                                case "doble":
-                                    //reportar error semantico,linea y columna
-                                    break;
-                                case "cadena":
-                                    //Reportar error semantoco, linea y columna
-                                    break;
-                            }
-                            break;
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
 
-                    }
-                    break;
-                case "id":
-                    String iden = raiz.Token.Text.Replace("\"", "");
-                    if (Programa.tablaGlobal.getSimbolo(iden) != null)
-                    {
-                        return new Resultado(Programa.tablaGlobal.getSimbolo(iden).tipo, Programa.tablaGlobal.getSimbolo(iden).valor);
-                    }
-                    else if (Programa.tablaLocal.getSimbolo(iden) != null)
-                    {
-                        return new Resultado(Programa.tablaLocal.getSimbolo(iden).tipo, Programa.tablaLocal.getSimbolo(iden).valor);
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                case "LLAMADAMETODO":
-                    break;
-                case "doble":
-                    return new Resultado("doble", raiz.Token.Text);
-                case "cadena":
-                    return new Resultado("cadena", raiz.Token.Text);
+                        }
+                        break;
+                    case "id":
+                        String iden = raiz.Token.Text.Replace("\"", "");
+                        if (Programa.tablaGlobal.getSimbolo(iden) != null)
+                        {
+                            return new Resultado(Programa.tablaGlobal.getSimbolo(iden).tipo, Programa.tablaGlobal.getSimbolo(iden).valor);
+                        }
+                        else if (Programa.tablaLocal.getSimbolo(iden) != null)
+                        {
+                            return new Resultado(Programa.tablaLocal.getSimbolo(iden).tipo, Programa.tablaLocal.getSimbolo(iden).valor);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    case "LLAMADAMETODO":
+                        break;
+                    case "doble":
+                        return new Resultado("doble", raiz.Token.Text);
+                    case "cadena":
+                        return new Resultado("cadena", raiz.Token.Text);
 
+                }
             }
 
             return null;

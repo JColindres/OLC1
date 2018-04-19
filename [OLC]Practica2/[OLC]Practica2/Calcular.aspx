@@ -39,12 +39,13 @@ raiz(36,2);
                             &nbsp; 
                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                             <br />
+                            <br />
                         </div>
                         <div class="col-md-offset-2 col-md-10">               
                             <asp:Button runat="server" OnClick="Mostrar" Text="MostrarArbol" CssClass="btn btn-default" />         
                             <br />
                             <br />
-                            <asp:Image ID="Image1" runat="server" Visible="false" ImageUrl="~/bin/AST.png" />
+                            <img ID="imagen1" src="~/imagenes/AST.png" runat="server" visible="false" />
                         </div>
                     </div>
             </section>
