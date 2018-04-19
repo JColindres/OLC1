@@ -19,14 +19,46 @@ namespace _OLC_Practica2.Ejecutar
             this.nombre = nombre;
             this.tipo = tipo;
             this.raiz = raiz;
-            //this.id=generarId(raiz.childNodes[3]);
+            //this.id = generarId(raiz.ChildNodes[3]);
 
         }
 
         public string generarId(ParseTreeNode parametros)
         {
             //aqui es donde se recorre la lista de parametros y se concatena el tipo de cada uno
-            return "";
+            string tipoAccion;
+            foreach (ParseTreeNode nodo in parametros.ChildNodes)
+            {
+                tipoAccion = nodo.Term.Name;
+                switch (tipoAccion)
+                {
+                    case "DECLA":
+                        ambito = "local";
+                        nombre = nodo.ChildNodes[0].Token.Text;
+                        Simbolo simbolo = new Simbolo(null, nombre, ambito, null);
+                        Boolean estado = Programa.tablaLocal.addSimbolo(simbolo);
+                        return id;
+                    case "E":
+                        generarId(nodo.ChildNodes[0]);
+                        break;
+                    case "id":
+                        String iden = raiz.Token.Text.Replace("\"", "");
+                        if (Programa.tablaGlobal.getSimbolo(iden) != null)
+                        {
+                            return iden;
+                        }
+                        else if (Programa.tablaLocal.getSimbolo(iden) != null)
+                        {
+                            return iden;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+
+                }
+            }
+                return "";
         }
     }
 }

@@ -107,8 +107,9 @@ namespace _OLC_Practica2.Ejecutar
                         tipo = nodo.ChildNodes[0].Token.Text;
                         nombre = nodo.ChildNodes[1].Token.Text;
                         ambito = "global";
-
-                        Funcion f = new Funcion(tipo, nombre, ambito, nodo);
+                        opA = new Aritmetica();
+                        resultado = opA.operar(nodo.ChildNodes[4].ChildNodes[1]);
+                        Funcion f = new Funcion(tipo, nombre, ambito, resultado.valor, nodo);
                         if (!existeFuncion(nombre))
                         {
                             funciones.Add(f);
@@ -424,14 +425,9 @@ namespace _OLC_Practica2.Ejecutar
                         ejecutar(nodo.ChildNodes[1]);
                         break;
                     case "MIENTRAS":
-                        /*esta sentencias while ya esta completo, solo que no para porque no hay 
-                         forma de comparar un valor puntual con un ID
-                         
-                       */
                         opR = new Relacional();
                         resultado = opR.relacionar(nodo.ChildNodes[1]);
                         TablaSimbolo aux2 = tablaLocal;
-                        //creo una nueva tabla para cambiar al ambito if
                         tablaLocal = new TablaSimbolo();
                         tablaLocal.cambiarAmbito(aux2);
                         if (resultado == null)
@@ -442,19 +438,51 @@ namespace _OLC_Practica2.Ejecutar
                         {
                             while (Boolean.Parse(resultado.valor + ""))
                             {
-                                    if (nodo.ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        ejecutar(nodo.ChildNodes[2]);
-                                        opR = new Relacional();
-                                        resultado = opR.relacionar(nodo.ChildNodes[1]);
-                                    }
+                                if (nodo.ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                {
+                                    
+                                }
+                                else
+                                {
+                                    opR = new Relacional();
+                                    resultado = opR.relacionar(nodo.ChildNodes[1]);
+                                    ejecutar(nodo.ChildNodes[2]);
+                                    opR = new Relacional();
+                                    resultado = opR.relacionar(nodo.ChildNodes[1]);
+                                }
                             }
                         }
                         tablaLocal = aux2;
+                        break;
+                    case "HACER":
+                        opR = new Relacional();
+                        resultado = opR.relacionar(nodo.ChildNodes[3]);
+                        TablaSimbolo aux24 = tablaLocal;
+                        tablaLocal = new TablaSimbolo();
+                        tablaLocal.cambiarAmbito(aux24);
+                        if (resultado == null)
+                        {
+                            consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                        }
+                        else
+                        {
+                            do
+                            {
+                                if (nodo.ChildNodes[1].ChildNodes[0].Term.Name == "SALIR")
+                                {
+
+                                }
+                                else
+                                {
+                                    opR = new Relacional();
+                                    resultado = opR.relacionar(nodo.ChildNodes[3]);
+                                    ejecutar(nodo.ChildNodes[1]);
+                                    opR = new Relacional();
+                                    resultado = opR.relacionar(nodo.ChildNodes[3]);
+                                }
+                            } while (Boolean.Parse(resultado.valor + ""));
+                        }
+                        tablaLocal = aux24;
                         break;
                     case "IMP":
                         opA = new Aritmetica();
@@ -467,6 +495,8 @@ namespace _OLC_Practica2.Ejecutar
                         Otroresultado = opA.operar(nodo.ChildNodes[2]);
                         Double ra = Math.Pow(Double.Parse(resultado.valor + ""), 1 / Double.Parse(Otroresultado.valor + ""));
                         consola.Text = consola.Text + "\n" + ra;
+                        break;
+                    case "LLAMFUNC":
                         break;
                     case "SALIR":
                         break;

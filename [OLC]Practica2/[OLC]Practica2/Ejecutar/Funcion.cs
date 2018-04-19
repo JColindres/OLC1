@@ -12,13 +12,15 @@ namespace _OLC_Practica2.Ejecutar
         public String id;//cuando hay sobrecarga el id es importante y para generarlo se concatena el nombre del metodo con todos los tipos de los parametros
         public String tipo;
         public String ambito;
+        public Object retorno;
         public ParseTreeNode raiz;
 
-        public Funcion(String tipo, String nombre, String ambito, ParseTreeNode raiz)
+        public Funcion(String tipo, String nombre, String ambito, Object retorno, ParseTreeNode raiz)
         {
             this.nombre = nombre;
             this.tipo = tipo;
             this.raiz = raiz;
+            this.retorno = retorno;
             //this.id=generarId(raiz.childNodes[3]);
 
         }

@@ -117,6 +117,7 @@ namespace _OLC_Practica2.Analizador
             S.Rule = PROGRAMA;
 
             PROGRAMA.Rule = programa + id + corA + CUERPO + corC;
+            PROGRAMA.ErrorRule = SyntaxError + corC;
 
             CUERPO.Rule = MakePlusRule(CUERPO, CUERPOS);
 
@@ -125,6 +126,8 @@ namespace _OLC_Practica2.Analizador
                 | PRINCIPAL
                 | DECLARACION
                 | ASIGNACION;
+            CUERPOS.ErrorRule = SyntaxError + corC;
+            CUERPOS.ErrorRule = SyntaxError + pYc;
 
             ATRIBUTOS.Rule = MakePlusRule(ATRIBUTOS, ATRIBUTO)
                 | Empty;
@@ -140,6 +143,8 @@ namespace _OLC_Practica2.Analizador
                 | INTERRUMPIR
                 | MIENTRAS
                 | HACER;
+            ATRIBUTO.ErrorRule = SyntaxError + pYc;
+            ATRIBUTO.ErrorRule = SyntaxError + corC;
 
             METODO.Rule = resVoid + id + parA + LISTA_PARAM + parC + corA + ATRIBUTOS + corC;
 
@@ -239,7 +244,7 @@ namespace _OLC_Practica2.Analizador
 
             #region Preferencias
             this.Root = S;
-            this.MarkTransient(TIPO, UNICOS, CUERPOS, CASOS, ATRIBUTO);
+            this.MarkTransient(TIPO, UNICOS, CUERPOS, ATRIBUTO);
             this.RegisterOperators(1, Associativity.Left, mas, menos);
             this.RegisterOperators(2, Associativity.Left, mul, div);
             this.RegisterOperators(3, Associativity.Left, pot);

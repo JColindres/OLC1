@@ -40,6 +40,9 @@ raiz(36,2);
                             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
                             <br />
                             <br />
+                            <asp:GridView ID="GridView1" runat="server" Visible="False">
+                            </asp:GridView>
+                            <br />
                         </div>
                         <div class="col-md-offset-2 col-md-10">               
                             <asp:Button runat="server" OnClick="Mostrar" Text="MostrarArbol" CssClass="btn btn-default" />         

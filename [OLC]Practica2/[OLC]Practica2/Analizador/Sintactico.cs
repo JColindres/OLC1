@@ -24,7 +24,7 @@ namespace _OLC_Practica2.Analizador
             return arbol.Root;
         }
 
-        private static void generarImagen(ParseTreeNode raiz)
+        public static void generarImagen(ParseTreeNode raiz)
         {
             try
             {

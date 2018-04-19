@@ -27,22 +27,46 @@ namespace _OLC_Practica2.Ejecutar
                     {
                         resultado1 = relacionar(raiz.ChildNodes[0]);
                         resultado2 = relacionar(raiz.ChildNodes[2]);
+                        if (raiz.ChildNodes[1].Token.Text == "AND")
+                        {
+                            if (Convert.ToBoolean(resultado1.valor) && Convert.ToBoolean(resultado2.valor))
+                            {
+                                return new Resultado("booleano", true);
+                            }
+                            else
+                            {
+                                return new Resultado("booleano", false);
+                            }
+                        }
+                        else if (raiz.ChildNodes[1].Token.Text == "OR")
+                        {
+                            if (Convert.ToBoolean(resultado1.valor) || Convert.ToBoolean(resultado2.valor))
+                            {
+                                return new Resultado("booleano", true);
+                            }
+                            else
+                            {
+                                return new Resultado("booleano", false);
+                            }
+                        }
+                    }
+                    else if (raiz.ChildNodes.Count == 2)
+                    {
+                        resultado1 = relacionar(raiz.ChildNodes[1]);
+                        if (!Convert.ToBoolean(resultado1.valor))
+                        {
+                            return new Resultado("booleano", true);
+                        }
+                        else
+                        {
+                            return new Resultado("booleano", false);
+                        }
                     }
                     else
                     {
                         return relacionar(raiz.ChildNodes[0]);
                     }
                     break;
-                case "NOT":
-                    resultado1 = relacionar(raiz.ChildNodes[1]);
-                    if (!Convert.ToBoolean(resultado1.valor))
-                    {
-                        return new Resultado("booleano", true);
-                    }
-                    else
-                    {
-                        return new Resultado("booleano", false);
-                    }
                 case "EXPR":
                     if (raiz.ChildNodes.Count == 3)
                     {
