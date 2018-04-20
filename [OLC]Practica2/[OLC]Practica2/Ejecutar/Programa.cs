@@ -9,13 +9,15 @@ namespace _OLC_Practica2.Ejecutar
     public class Programa
     {
 
-        public List<Metodo> metodos;
+        public static List<Metodo> metodos;
         public List<Clase> clases;
-        public List<Funcion> funciones;
+        public static List<Funcion> funciones;
         public static TablaSimbolo tablaGlobal;
         public static TablaSimbolo tablaLocal;
+        public static Metodo met;
+        public static Funcion func;
         public TextBox consola;
-        public Stack<String> pilaAmbito;
+        public static Stack<String> pilaAmbito;
         String lista;
 
 
@@ -96,6 +98,7 @@ namespace _OLC_Practica2.Ejecutar
                         if (!existeMetodo(nombre))
                         {
                             metodos.Add(m);
+                            ejecutar(nodo.ChildNodes[2]);
                         }
                         else
                         {
@@ -107,12 +110,11 @@ namespace _OLC_Practica2.Ejecutar
                         tipo = nodo.ChildNodes[0].Token.Text;
                         nombre = nodo.ChildNodes[1].Token.Text;
                         ambito = "global";
-                        opA = new Aritmetica();
-                        resultado = opA.operar(nodo.ChildNodes[4].ChildNodes[1]);
-                        Funcion f = new Funcion(tipo, nombre, ambito, resultado.valor, nodo);
+                        Funcion f = new Funcion(tipo, nombre, ambito, null, nodo);
                         if (!existeFuncion(nombre))
                         {
                             funciones.Add(f);
+                            ejecutar(nodo.ChildNodes[2]);
                         }
                         else
                         {
@@ -138,7 +140,6 @@ namespace _OLC_Practica2.Ejecutar
                         break;
                     case "DECLARACION":
                         lista = "";
-                        tipo = nodo.ChildNodes[0].Token.Text;
                         segundaEjecucion(nodo.ChildNodes[1]);
                         ambito = "global";
                         resultado = new Resultado(null, null);
@@ -151,7 +152,7 @@ namespace _OLC_Practica2.Ejecutar
                                 if (item.ToString() != "")
                                 {
                                     nombre = item.ToString();
-                                    Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
+                                    Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
                                     Boolean estado = tablaGlobal.addSimbolo(simbolo);
                                     if (!estado)
                                     {
@@ -256,7 +257,6 @@ namespace _OLC_Practica2.Ejecutar
                 {
                     case "DECLARACION":
                         lista = "";
-                        tipo = nodo.ChildNodes[0].Token.Text;
                         ejecutar(nodo.ChildNodes[1]);
                         ambito = "local";
                         resultado = new Resultado(null, null);
@@ -269,7 +269,7 @@ namespace _OLC_Practica2.Ejecutar
                                 if (item.ToString() != "")
                                 {
                                     nombre = item.ToString();
-                                    Simbolo simbolo = new Simbolo(tipo, nombre, ambito, resultado.valor);
+                                    Simbolo simbolo = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
                                     Boolean estado = tablaLocal.addSimbolo(simbolo);
                                     if (!estado)
                                     {
@@ -353,6 +353,35 @@ namespace _OLC_Practica2.Ejecutar
                         break;
                     case "id":
                         lista = lista + nodo.Token.Text.Replace("\"", "") + ",";
+                        break;
+                    case "DECLA":
+                        ambito = "local";
+                        nombre = nodo.ChildNodes[1].Token.Text;
+                        resultado = new Resultado(null, null);
+                        resultado.valor = null;
+                        resultado.tipo = null;
+                        Simbolo sim = new Simbolo(resultado.tipo, nombre, ambito, resultado.valor);
+                        Boolean est = tablaLocal.addSimbolo(sim);
+                        if (!est)
+                        {
+                            consola.Text = consola.Text + "\n" + "La variable " + nombre + " ya existe.";
+                        }
+                        else
+                        {
+                            consola.Text = consola.Text + "\n" + "Se guardaro la variable " + nombre + ".";
+                        }
+                        break;
+                    case "E":
+                        opA = new Aritmetica();
+                        resultado = opA.operar(nodo.ChildNodes[0]);
+                        TablaSimbolo auxE = tablaGlobal;
+                        tablaGlobal = new TablaSimbolo();
+                        tablaGlobal.cambiarAmbito(auxE);
+                        if (resultado == null)
+                        {
+                            consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                        }
+                        tablaGlobal = auxE;
                         break;
                     case "SI":
                         opR = new Relacional();
@@ -487,19 +516,103 @@ namespace _OLC_Practica2.Ejecutar
                     case "IMP":
                         opA = new Aritmetica();
                         resultado = opA.operar(nodo.ChildNodes[1]);
-                        consola.Text = consola.Text + "\n" + resultado.valor;
+                        if (resultado == null)
+                        {
+                            consola.Text = consola.Text + "\n" + "La variable no existe";
+                        }
+                        else
+                        {
+                            consola.Text = consola.Text + "\n" + resultado.valor;
+                        }
                         break;
                     case "RAIZ":
                         opA = new Aritmetica();
                         resultado = opA.operar(nodo.ChildNodes[1]);
                         Otroresultado = opA.operar(nodo.ChildNodes[2]);
-                        Double ra = Math.Pow(Double.Parse(resultado.valor + ""), 1 / Double.Parse(Otroresultado.valor + ""));
-                        consola.Text = consola.Text + "\n" + ra;
+                        if (resultado == null && Otroresultado == null)
+                        {
+                            consola.Text = consola.Text + "\n" + "La variable no existe";
+                        }
+                        else
+                        {
+                            Double ra = Math.Pow(Double.Parse(resultado.valor + ""), 1 / Double.Parse(Otroresultado.valor + ""));
+                            consola.Text = consola.Text + "\n" + ra;
+                        }
                         break;
                     case "LLAMFUNC":
+                        met = buscarMetodo(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                        func = buscarFuncion(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                        if (met != null)
+                        {
+                            tablaLocal = new TablaSimbolo();
+                            pilaAmbito.Push(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                            ejecutar(met.raiz.ChildNodes[3]);
+                            pilaAmbito.Pop();
+                        }
+                        else if (func != null)
+                        {
+                            tablaLocal = new TablaSimbolo();
+                            pilaAmbito.Push(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                            ejecutar(func.raiz.ChildNodes[3]);
+                            resultado = ejecutar(func.raiz.ChildNodes[4]);
+                            pilaAmbito.Pop();
+                            if (resultado != null)
+                            {
+                                consola.Text = consola.Text + "\n" + "Se retorna: " + resultado.valor;
+                                return resultado;
+                            }
+                            else
+                            {
+                                consola.Text = consola.Text + "\n" + "error del retorno";
+                            }
+                        }
+                        else
+                        {
+                            consola.Text = consola.Text + "\n" + "No existe el metodo o funcion a llamar";
+                        }
+                        break;
+                    case "LLAMADA":
+                        met = buscarMetodo(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                        func = buscarFuncion(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                        if (met != null)
+                        {
+                            tablaLocal = new TablaSimbolo();
+                            pilaAmbito.Push(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                            ejecutar(met.raiz.ChildNodes[3]);
+                            pilaAmbito.Pop();
+                        }
+                        else if (func != null)
+                        {
+                            tablaLocal = new TablaSimbolo();
+                            pilaAmbito.Push(nodo.ChildNodes[0].ChildNodes[0].Token.Text);
+                            ejecutar(func.raiz.ChildNodes[3]);
+                            resultado = ejecutar(func.raiz.ChildNodes[4]);
+                            pilaAmbito.Pop();
+                            consola.Text = consola.Text + "\n" + "Se retorna: " + resultado.valor;
+                            return resultado;
+                        }
+                        else
+                        {
+                            consola.Text = consola.Text + "\n" + "No existe el metodo o funcion a llamar";
+                        }
                         break;
                     case "SALIR":
                         break;
+                    case "RETORNO":
+                        func = new Funcion(null, null, null, null, null);
+                        opA = new Aritmetica();
+                        resultado = opA.operar(nodo.ChildNodes[1]);
+                        if (resultado == null)
+                        {
+                            consola.Text = consola.Text + "\n" + "Retorno no valido";
+                            return resultado;
+                        }
+                        else
+                        {
+                            consola.Text = consola.Text + "\n" + "Se retorna: " + resultado.valor;
+                            func.retorno = resultado.valor;
+                            return resultado;
+                        }
                 }
             }
             return null;
@@ -532,6 +645,35 @@ namespace _OLC_Practica2.Ejecutar
 
             return null;
         }
+
+        public static Metodo buscarMetodo(String nombre)
+        {
+            foreach (Metodo m in metodos)
+            {
+                if (m.nombre == nombre)
+                {
+                    return m;
+                }
+
+            }
+
+            return null;
+        }
+
+        public static Funcion buscarFuncion(String nombre)
+        {
+            foreach (Funcion f in funciones)
+            {
+                if (f.nombre == nombre)
+                {
+                    return f;
+                }
+
+            }
+
+            return null;
+        }
+
         public Boolean existeMetodo(String nombre)
         {
             foreach (Metodo m in metodos)

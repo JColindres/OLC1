@@ -37,6 +37,7 @@ namespace _OLC_Practica2.Ejecutar
                         nombre = nodo.ChildNodes[0].Token.Text;
                         Simbolo simbolo = new Simbolo(null, nombre, ambito, null);
                         Boolean estado = Programa.tablaLocal.addSimbolo(simbolo);
+                        id += nombre + " ";
                         return id;
                     case "E":
                         generarId(nodo.ChildNodes[0]);
@@ -45,11 +46,13 @@ namespace _OLC_Practica2.Ejecutar
                         String iden = raiz.Token.Text.Replace("\"", "");
                         if (Programa.tablaGlobal.getSimbolo(iden) != null)
                         {
-                            return iden;
+                            id += iden + " ";
+                            return id;
                         }
                         else if (Programa.tablaLocal.getSimbolo(iden) != null)
                         {
-                            return iden;
+                            id += iden + " ";
+                            return id;
                         }
                         else
                         {
@@ -58,7 +61,7 @@ namespace _OLC_Practica2.Ejecutar
 
                 }
             }
-                return "";
+                return id;
         }
     }
 }

@@ -100,6 +100,7 @@ namespace _OLC_Practica2.Analizador
                 LLAMFUNC = new NonTerminal("LLAMFUNC"),
                 OPERANDO = new NonTerminal("OPERANDO"),
                 RETORNO = new NonTerminal("RETORNO"),
+                RETORN = new NonTerminal("RETORN"),
                 SI = new NonTerminal("SI"),
                 SINO = new NonTerminal("SINO"),
                 SINO_SI = new NonTerminal("SINO_SI"),
@@ -148,9 +149,11 @@ namespace _OLC_Practica2.Analizador
 
             METODO.Rule = resVoid + id + parA + LISTA_PARAM + parC + corA + ATRIBUTOS + corC;
 
-            FUNCION.Rule = TIPO + id + parA + LISTA_PARAM + parC + corA + ATRIBUTOS + RETORNO + corC;
+            FUNCION.Rule = TIPO + id + parA + LISTA_PARAM + parC + corA + ATRIBUTOS + RETORN + corC;
 
             PRINCIPAL.Rule = principal + parA + parC + corA + ATRIBUTOS + corC;
+
+            RETORN.Rule = RETORNO;
 
             RETORNO.Rule = resReturn + E + pYc;
 
@@ -236,8 +239,8 @@ namespace _OLC_Practica2.Analizador
                 | E + noIgual + E
                 | E;
 
-            EXPL.Rule = EXPL + OR + EXPR
-                | EXPL + AND + EXPR
+            EXPL.Rule = EXPL + OR + EXPL
+                | EXPL + AND + EXPL
                 | NOT + EXPL
                 | EXPR;
             #endregion
