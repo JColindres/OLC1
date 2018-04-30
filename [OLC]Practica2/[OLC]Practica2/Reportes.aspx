@@ -1,17 +1,14 @@
-﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="_OLC_Practica2.Contact" %>
+﻿<%@ Page Title="Manuales" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reportes.aspx.cs" Inherits="_OLC_Practica2.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
-    <h3>Your contact page.</h3>
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+    <h3>Esta es la gramatica:</h3>
+    <p>&nbsp;</p>
+<p><img ID="imagen1" src="~/imagenes/gramatica1.png" runat="server" visible="true"/></p>
+<p><img ID="imagen2" src="~/imagenes/gramatica2.png" runat="server" visible="true"/></p>
+    <h3>Esta es la  precedencia y asociatividad de operadores</h3>
+<p><img ID="imagen3" src="~/imagenes/aso.png" runat="server" visible="true"/></p>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+&nbsp;
+
 </asp:Content>

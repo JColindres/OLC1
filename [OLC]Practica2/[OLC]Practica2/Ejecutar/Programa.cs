@@ -19,9 +19,6 @@ namespace _OLC_Practica2.Ejecutar
         public TextBox consola;
         public static Stack<String> pilaAmbito;
         String lista;
-
-
-        //operaciones arimeticas, relacionales y logicas
         Aritmetica opA;
         Relacional opR;
 
@@ -51,8 +48,7 @@ namespace _OLC_Practica2.Ejecutar
                 consola.Text = consola.Text + "\n" + "No hay metodo principal";
             }
         }
-
-        //aqui es donde se guardan los metodos y variables globales
+        
         public void primeraEjecucion(ParseTreeNode raiz)
         {
             String tipoAccion = "";
@@ -177,7 +173,7 @@ namespace _OLC_Practica2.Ejecutar
                         {
                             nombre = nodo.ChildNodes[1].Token.Text;
                             opA = new Aritmetica();
-                            resultado = opA.operar(nodo.ChildNodes[2]);
+                            resultado = operar(nodo.ChildNodes[2]);
                             if (resultado == null)
                             {
                                 consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
@@ -207,7 +203,7 @@ namespace _OLC_Practica2.Ejecutar
                             if (estado1)
                             {
                                 opA = new Aritmetica();
-                                resultado = opA.operar(nodo.ChildNodes[1]);
+                                resultado = operar(nodo.ChildNodes[1]);
                                 if (resultado == null)
                                 {
                                     consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
@@ -249,6 +245,10 @@ namespace _OLC_Practica2.Ejecutar
             String ambito;
             Array listaID;
             Resultado resultado;
+            Resultado case1;
+            Resultado case2;
+            Resultado case3;
+            Resultado case4;
             Resultado Otroresultado;
             foreach (ParseTreeNode nodo in raiz.ChildNodes)
             {
@@ -294,7 +294,7 @@ namespace _OLC_Practica2.Ejecutar
                         {
                             nombre = nodo.ChildNodes[1].Token.Text;
                             opA = new Aritmetica();
-                            resultado = opA.operar(nodo.ChildNodes[2]);
+                            resultado = operar(nodo.ChildNodes[2]);
                             if (resultado == null)
                             {
                                 consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
@@ -324,7 +324,7 @@ namespace _OLC_Practica2.Ejecutar
                             if (estado1)
                             {
                                 opA = new Aritmetica();
-                                resultado = opA.operar(nodo.ChildNodes[1]);
+                                resultado = operar(nodo.ChildNodes[1]);
                                 if (resultado == null)
                                 {
                                     consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
@@ -373,7 +373,7 @@ namespace _OLC_Practica2.Ejecutar
                         break;
                     case "E":
                         opA = new Aritmetica();
-                        resultado = opA.operar(nodo.ChildNodes[0]);
+                        resultado = operar(nodo.ChildNodes[0]);
                         TablaSimbolo auxE = tablaGlobal;
                         tablaGlobal = new TablaSimbolo();
                         tablaGlobal.cambiarAmbito(auxE);
@@ -483,6 +483,252 @@ namespace _OLC_Practica2.Ejecutar
                         }
                         tablaLocal = aux2;
                         break;
+                    case "INTERRUMPIR":
+                        #region Switch
+                        opA = new Aritmetica();
+                        resultado = operar(nodo.ChildNodes[1]);
+                        if (nodo.ChildNodes[2].ChildNodes.Count == 4) {
+                            case1 = opA.operar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[1]);
+                            string caso1 = case1.valor + "";
+                            case2 = opA.operar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[1]);
+                            string caso2 = case2.valor + "";
+                            case3 = opA.operar(nodo.ChildNodes[2].ChildNodes[2].ChildNodes[1]);
+                            string caso3 = case3.valor + "";
+                            case4 = opA.operar(nodo.ChildNodes[2].ChildNodes[3].ChildNodes[1]);
+                            string caso4 = case4.valor + "";
+                            TablaSimbolo auxI = tablaLocal;
+                            tablaLocal = new TablaSimbolo();
+                            tablaLocal.cambiarAmbito(auxI);
+                            if (resultado == null)
+                            {
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                            }
+                            else
+                            {
+                                if (resultado.valor + "" != null)
+                                {
+                                    if (caso1 != null && caso1 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso2 != null && caso2 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso3 != null && caso3 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[2].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso4 != null && caso4 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[3].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (nodo.ChildNodes[3].ChildNodes[0].Token.Text != null && nodo.ChildNodes[3].ChildNodes[0].Token.Text == "DEFECTO")
+                                    {
+                                        if (nodo.ChildNodes[3].ChildNodes[1].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[3].ChildNodes[1]);
+                                        }
+                                    }
+                                }
+                            }
+                            tablaLocal = auxI;
+                        }
+                        else if(nodo.ChildNodes[2].ChildNodes.Count == 3) {
+                            case1 = opA.operar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[1]);
+                            string caso1 = case1.valor + "";
+                            case2 = opA.operar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[1]);
+                            string caso2 = case2.valor + "";
+                            case3 = opA.operar(nodo.ChildNodes[2].ChildNodes[2].ChildNodes[1]);
+                            string caso3 = case3.valor + "";
+                            TablaSimbolo auxI = tablaLocal;
+                            tablaLocal = new TablaSimbolo();
+                            tablaLocal.cambiarAmbito(auxI);
+                            if (resultado == null)
+                            {
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                            }
+                            else
+                            {
+                                if (resultado.valor + "" != null)
+                                {
+                                    if (caso1 != null && caso1 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso2 != null && caso2 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso3 != null && caso3 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[2].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (nodo.ChildNodes[3].ChildNodes[0].Token.Text != null && nodo.ChildNodes[3].ChildNodes[0].Token.Text == "DEFECTO")
+                                    {
+                                        if (nodo.ChildNodes[3].ChildNodes[1].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[3].ChildNodes[1]);
+                                        }
+                                    }
+                                }
+                            }
+                            tablaLocal = auxI;
+                        }
+                        else if (nodo.ChildNodes[2].ChildNodes.Count == 2)
+                        {
+                            case1 = opA.operar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[1]);
+                            string caso1 = case1.valor + "";
+                            case2 = opA.operar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[1]);
+                            string caso2 = case2.valor + "";
+                            TablaSimbolo auxI = tablaLocal;
+                            tablaLocal = new TablaSimbolo();
+                            tablaLocal.cambiarAmbito(auxI);
+                            if (resultado == null)
+                            {
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                            }
+                            else
+                            {
+                                if (resultado.valor + "" != null)
+                                {
+                                    if (caso1 != null && caso1 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (caso2 != null && caso2 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[1].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (nodo.ChildNodes[3].ChildNodes[0].Token.Text != null && nodo.ChildNodes[3].ChildNodes[0].Token.Text == "DEFECTO")
+                                    {
+                                        if (nodo.ChildNodes[3].ChildNodes[1].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[3].ChildNodes[1]);
+                                        }
+                                    }
+                                }
+                            }
+                            tablaLocal = auxI;
+                        }
+                        else if (nodo.ChildNodes[2].ChildNodes.Count == 1)
+                        {
+                            case1 = opA.operar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[1]);
+                            string caso1 = case1.valor + "";
+                            TablaSimbolo auxI = tablaLocal;
+                            tablaLocal = new TablaSimbolo();
+                            tablaLocal.cambiarAmbito(auxI);
+                            if (resultado == null)
+                            {
+                                consola.Text = consola.Text + "\n" + "El tipo de variable no coincide";
+                            }
+                            else
+                            {
+                                if (resultado.valor + "" != null)
+                                {
+                                    if (caso1 != null && caso1 == resultado.valor + "")
+                                    {
+                                        if (nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[2].ChildNodes[0].ChildNodes[2]);
+                                        }
+                                    }
+                                    else if (nodo.ChildNodes[3].ChildNodes[0].Token.Text != null && nodo.ChildNodes[3].ChildNodes[0].Token.Text == "DEFECTO")
+                                    {
+                                        if (nodo.ChildNodes[3].ChildNodes[1].ChildNodes[0].Term.Name == "SALIR")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            ejecutar(nodo.ChildNodes[3].ChildNodes[1]);
+                                        }
+                                    }
+                                }
+                            }
+                            tablaLocal = auxI;
+                        }
+                        #endregion
+                        break;
                     case "HACER":
                         opR = new Relacional();
                         resultado = opR.relacionar(nodo.ChildNodes[3]);
@@ -515,7 +761,7 @@ namespace _OLC_Practica2.Ejecutar
                         break;
                     case "IMP":
                         opA = new Aritmetica();
-                        resultado = opA.operar(nodo.ChildNodes[1]);
+                        resultado = operar(nodo.ChildNodes[1]);
                         if (resultado == null)
                         {
                             consola.Text = consola.Text + "\n" + "La variable no existe";
@@ -527,8 +773,8 @@ namespace _OLC_Practica2.Ejecutar
                         break;
                     case "RAIZ":
                         opA = new Aritmetica();
-                        resultado = opA.operar(nodo.ChildNodes[1]);
-                        Otroresultado = opA.operar(nodo.ChildNodes[2]);
+                        resultado = operar(nodo.ChildNodes[1]);
+                        Otroresultado = operar(nodo.ChildNodes[2]);
                         if (resultado == null && Otroresultado == null)
                         {
                             consola.Text = consola.Text + "\n" + "La variable no existe";
@@ -701,6 +947,275 @@ namespace _OLC_Practica2.Ejecutar
             return false;
 
         }
-        
+
+        public Resultado operar(ParseTreeNode raiz)
+        {
+            Resultado resultado1 = null;
+            Resultado resultado2 = null;
+
+            switch (raiz.Term.Name)
+            {
+                case "E":
+                    if (raiz.ChildNodes.Count == 3)
+                    {
+                        resultado1 = operar(raiz.ChildNodes[0]);
+                        resultado2 = operar(raiz.ChildNodes[2]);
+                    }
+                    else
+                    {
+                        return operar(raiz.ChildNodes[0]);
+                    }
+                    break;
+                case "doble":
+                    return new Resultado("doble", raiz.Token.Text);
+                case "cadena":
+                    String cadena = raiz.Token.Text.Replace("\"", "");
+                    return new Resultado("cadena", cadena);
+                case "booleano":
+                    return new Resultado("booleano", raiz.Token.Text);
+                case "id":
+                    String iden = raiz.Token.Text.Replace("\"", "");
+                    if (Programa.tablaGlobal.getSimbolo(iden) != null)
+                    {
+                        return new Resultado(Programa.tablaGlobal.getSimbolo(iden).tipo, Programa.tablaGlobal.getSimbolo(iden).valor);
+                    }
+                    else if (Programa.tablaLocal.getSimbolo(iden) != null)
+                    {
+                        return new Resultado(Programa.tablaLocal.getSimbolo(iden).tipo, Programa.tablaLocal.getSimbolo(iden).valor);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                case "LLAMADA":
+                    func = buscarFuncion(raiz.ChildNodes[0].Token.Text);
+                    if (func != null)
+                    {
+                        tablaLocal = new TablaSimbolo();
+                        pilaAmbito.Push(raiz.ChildNodes[0].Token.Text);
+                        ejecutar(func.raiz.ChildNodes[3]);
+                        resultado1 = ejecutar(func.raiz.ChildNodes[4]);
+                        pilaAmbito.Pop();
+                        return resultado1;
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+                case "-":
+                    break;
+            }
+
+            String operacion = raiz.ChildNodes[1].Token.Text;
+            String tipo1;
+            String tipo2;
+            if (resultado1 != null && resultado2 != null)
+            {
+                switch (operacion)
+                {
+                    case "+":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") + Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        return new Resultado("cadena", Double.Parse(resultado1.valor + "") + (String)resultado2.valor);
+
+                                    case "booleano":
+                                        return new Resultado("cadena", Double.Parse(resultado1.valor + "") + resultado2.valor.ToString());
+
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("cadena", (String)resultado1.valor + Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        return new Resultado("cadena", (String)resultado1.valor + (String)resultado2.valor);
+
+                                    case "booleano":
+                                        return new Resultado("cadena", (String)resultado1.valor + resultado2.valor.ToString());
+
+                                }
+                                break;
+                            case "booleano":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("cadena", resultado1.valor.ToString() + Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        return new Resultado("cadena", resultado1.valor.ToString() + (String)resultado2.valor);
+
+                                    case "booleano":
+                                        return new Resultado("cadena", resultado2.valor.ToString() + resultado2.valor.ToString());
+
+                                }
+                                break;
+                        }
+
+                        break;
+                    case "*":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") * Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
+
+                        }
+                        break;
+                    case "/":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") / Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
+
+                        }
+                        break;
+                    case "-":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Double.Parse(resultado1.valor + "") - Double.Parse(resultado2.valor + ""));
+
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
+
+                        }
+                        break;
+                    case "^":
+                        tipo1 = resultado1.tipo;
+                        switch (tipo1)
+                        {
+                            case "doble":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        return new Resultado("doble", Math.Pow(Double.Parse(resultado1.valor + ""), Double.Parse(resultado2.valor + "")));
+
+                                    case "cadena":
+                                        //reportar error semantico, linea y columna
+                                        break;
+                                }
+                                break;
+                            case "cadena":
+                                tipo2 = resultado2.tipo;
+                                switch (tipo2)
+                                {
+                                    case "doble":
+                                        //reportar error semantico,linea y columna
+                                        break;
+                                    case "cadena":
+                                        //Reportar error semantoco, linea y columna
+                                        break;
+                                }
+                                break;
+
+                        }
+                        break;
+                    case "id":
+                        String iden = raiz.Token.Text.Replace("\"", "");
+                        if (Programa.tablaGlobal.getSimbolo(iden) != null)
+                        {
+                            return new Resultado(Programa.tablaGlobal.getSimbolo(iden).tipo, Programa.tablaGlobal.getSimbolo(iden).valor);
+                        }
+                        else if (Programa.tablaLocal.getSimbolo(iden) != null)
+                        {
+                            return new Resultado(Programa.tablaLocal.getSimbolo(iden).tipo, Programa.tablaLocal.getSimbolo(iden).valor);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    case "LLAMADAMETODO":
+                        break;
+                    case "doble":
+                        return new Resultado("doble", raiz.Token.Text);
+                    case "cadena":
+                        return new Resultado("cadena", raiz.Token.Text);
+
+                }
+            }
+
+            return null;
+
+        }
     }
 }

@@ -52,30 +52,6 @@ namespace _OLC_Practica2.Ejecutar
                     {                        
                         return null;
                     }
-                case "LLAMADA":
-                    Programa.met = Programa.buscarMetodo(raiz.ChildNodes[0].Token.Text);
-                    Programa.func = Programa.buscarFuncion(raiz.ChildNodes[0].Token.Text);
-                    if (Programa.met != null)
-                    {
-                        Programa.tablaLocal = new TablaSimbolo();
-                        Programa.pilaAmbito.Push(raiz.ChildNodes[0].ChildNodes[0].Token.Text);
-                        //ejecutar(Programa.met.raiz.ChildNodes[3]);
-                        Programa.pilaAmbito.Pop();
-                    }
-                    else if (Programa.func != null)
-                    {
-                        Programa.tablaLocal = new TablaSimbolo();
-                        Programa.pilaAmbito.Push(raiz.ChildNodes[0].ChildNodes[0].Token.Text);
-                        //ejecutar(Programa.func.raiz.ChildNodes[3]);
-                        //resultado1 = ejecutar(Programa.func.raiz.ChildNodes[4]);
-                        Programa.pilaAmbito.Pop();
-                        return resultado1;
-                    }
-                    else
-                    {
-
-                    }
-                    break;
                 case "-":
                     break;
             }

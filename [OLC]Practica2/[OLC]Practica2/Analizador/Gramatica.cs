@@ -196,12 +196,12 @@ namespace _OLC_Practica2.Analizador
 
             SINO.Rule = sino + corA + ATRIBUTOS + corC;
 
-            INTERRUMPIR.Rule = interrumpir + parA + E + parC + corA + CASO + DEFECTO + corC;
+            INTERRUMPIR.Rule = interrumpir + parA + E + parC + corA + CASOS + DEFECTO + corC;
 
-            CASO.Rule = MakePlusRule(CASO, CASOS)
+            CASOS.Rule = MakePlusRule(CASOS, CASO)
                 | Empty;
 
-            CASOS.Rule = caso + E + dosPuntos + ATRIBUTOS;
+            CASO.Rule = caso + E + dosPuntos + ATRIBUTOS;
 
             DEFECTO.Rule = defecto + dosPuntos + ATRIBUTOS
                 | Empty;

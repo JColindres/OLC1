@@ -52,7 +52,7 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Inicio</a></li>
                         <li><a runat="server" href="~/Calcular">Calcular</a></li>
-                        <li><a runat="server" href="~/Reportes">Reportes</a></li>
+                        <li><a runat="server" href="~/Reportes">Manuales</a></li>
                     </ul>
                 </div>
             </div>
